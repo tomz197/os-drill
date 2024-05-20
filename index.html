@@ -16,7 +16,7 @@
     </script>
 </head>
 
-<body class="p-5">
+<body class="p-1 md:p-5 max-w-screen-lg mx-auto">
 
 </body>
 <script>
@@ -383,8 +383,8 @@
      */
     function renderTheme(themeNum) {
         const backBtn = document.createElement('button');
-        backBtn.innerText = 'Back';
-        backBtn.className = 'p-2 m-2 bg-blue-500 text-white rounded';
+        backBtn.innerText = '⬅️Back';
+        backBtn.className = 'px-4 py-2 bg-blue-500 text-white rounded';
         backBtn.onclick = () => {
             renderPickTheme();
         };
@@ -439,7 +439,7 @@
         }
 
         const form = document.createElement('form');
-        form.className = 'flex flex-col p-4 gap-2';
+        form.className = 'flex flex-col gap-2';
         mixed.forEach((question, index) => {
             const div = document.createElement('div');
             div.id = `question-${index}-wrapper`;
@@ -490,7 +490,7 @@
 
         const reload = document.createElement('button');
         reload.innerText = 'Reload';
-        reload.className = 'px-2 py-4 bg-blue-500 text-white rounded';
+        reload.className = 'px-6 py-4 bg-blue-500 text-white rounded';
         reload.onclick = () => {
             renderTheme(themeNum);
         };
