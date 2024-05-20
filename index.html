@@ -381,7 +381,7 @@
     /**
      * @param {number} themeNum
      */
-    function renderTheme(themeNum) {
+    function renderTheme(themeNum, testAll = false) {
         const backBtn = document.createElement('button');
         backBtn.innerText = '⬅️Back';
         backBtn.className = 'px-4 py-2 bg-blue-500 text-white rounded';
@@ -389,14 +389,23 @@
             renderPickTheme();
         };
         const title = document.createElement('h1');
-        title.innerText = `Theme ${themeNum}`;
+        title.innerText = `Theme ${testAll ? "all" : themeNum}`;
         title.className = 'text-2xl font-semibold';
 
         body.innerHTML = '';
         body.appendChild(backBtn);
         body.appendChild(title);
 
-        const theme = drill.find((theme) => theme.section === themeNum);
+        const theme = (() => {
+            if (testAll) {
+                return drill.reduce((acc, {correct, incorrect}) => {
+                    acc.correct.push(...correct);
+                    acc.incorrect.push(...incorrect);
+                    return acc;
+                }, {correct: [], incorrect: []});
+            }
+            return drill.find((theme) => theme.section === themeNum);
+        })();
         if (theme == null) {
             alert('theme is null');
             console.error('theme is null');
@@ -408,7 +417,6 @@
         const incorrectNum = 5 - correctNum;
         const mixed = [];
 
-        // select 2 correct questions
         /** type {Array.<string>} */
         const correct = []
         do {
@@ -420,7 +428,6 @@
             mixed.push(theme.correct[index]);
         } while (correct.length < correctNum);
 
-        // select 3 incorrect questions
         /** type {Array.<string>} */
         const incorrect = []
         do {
@@ -492,7 +499,7 @@
         reload.innerText = 'Reload';
         reload.className = 'px-6 py-4 bg-blue-500 text-white rounded';
         reload.onclick = () => {
-            renderTheme(themeNum);
+            renderTheme(themeNum, testAll);
         };
 
         const submit = document.createElement('button');
@@ -529,11 +536,16 @@
             }
 
             const button = document.createElement('button');
-            button.className = 'p-2 m-2 bg-blue-500 text-white rounded';
+            button.className = 'py-2 px-4 m-2 bg-blue-500 text-white rounded';
             button.innerText = `Theme ${section}`;
             button.onclick = () => renderTheme(section);
             body.appendChild(button);
         });
+        const button = document.createElement('button');
+        button.className = 'py-2 px-4 m-2 bg-blue-500 text-white rounded';
+        button.innerText = `All themes`;
+        button.onclick = () => renderTheme(null, true);
+        body.appendChild(button);
     }
 
     renderPickTheme();
