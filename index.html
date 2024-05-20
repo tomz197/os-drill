@@ -430,12 +430,15 @@
 
         /** type {Array.<string>} */
         const incorrect = []
+        /** type {Array.<string>} */
+        const incorrect_correct = []
         do {
             const index = Math.floor(Math.random() * theme.incorrect.length);
             if (incorrect.includes(theme.incorrect[index])) {
                 continue;
             }
             incorrect.push(theme.incorrect[index]);
+            incorrect_correct.push(theme.correct[index]);
             mixed.push(theme.incorrect[index]);
         } while (incorrect.length < incorrectNum);
 
@@ -460,6 +463,7 @@
 
             const label = document.createElement('label');
             label.className = 'flex-1';
+            label.id = `question-${index}-label`;
             label.htmlFor = `question-${index}`;
             label.innerHTML = question;
 
@@ -479,6 +483,28 @@
                     wrapper.classList.add('bg-green-200');
                 } else {
                     wrapper.classList.add('bg-red-200');
+                    const label = document.getElementById(`${checkbox.id}-label`);
+                    const toggleCorrectBtn = document.createElement('button');
+                    const toggleIncorrectBtn = document.createElement('button');
+
+                    toggleCorrectBtn.innerText = 'Show correct';
+                    toggleCorrectBtn.className = 'px-2 py-1 italic underline font-semibold';
+                    toggleCorrectBtn.onclick = () => {
+                        const correct_value = incorrect_correct[incorrect.indexOf(checkbox.value)];
+                        label.innerHTML = correct_value + '<br/><br/>';
+                        label.appendChild(toggleIncorrectBtn);
+                    };
+
+                    toggleIncorrectBtn.innerText = 'Show incorrect';
+                    toggleIncorrectBtn.className = 'px-2 py-1 italic underline font-semibold';
+                    toggleIncorrectBtn.onclick = () => {
+                        const incorrect_value = checkbox.value;
+                        label.innerHTML = incorrect_value + '<br/><br/>';
+                        label.appendChild(toggleCorrectBtn);
+                    };
+
+                    label.innerHTML = checkbox.value + '<br/><br/>';
+                    label.appendChild(toggleCorrectBtn);
                 }
 
                 if (checkbox.checked && correct.includes(checkbox.value)) {
