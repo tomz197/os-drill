@@ -175,7 +175,7 @@ function renderTheme(themeNum, testAll = false) {
 }
 
 function renderPickTheme() {
-    body.innerHTML = '<h1 class="text-2xl font-semibold">Pick part</h1>';
+    body.innerHTML = '<h1 class="text-2xl font-semibold">Pick a part</h1>';
     drill.forEach(({ section, correct, incorrect, name }) => {
         if (section == null) {
             alert('section is null');
