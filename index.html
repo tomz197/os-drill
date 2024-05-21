@@ -437,6 +437,11 @@
             if (incorrect.includes(theme.incorrect[index])) {
                 continue;
             }
+            for (let i = 0; i < correctNum; i++) {
+                if (theme.correct.includes(theme.incorrect[index])) {
+                    continue;
+                }
+            }
             incorrect.push(theme.incorrect[index]);
             incorrect_correct.push(theme.correct[index]);
             mixed.push(theme.incorrect[index]);
