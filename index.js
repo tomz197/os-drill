@@ -210,6 +210,13 @@ function renderPickPartPage() {
 
     body.appendChild(button);
     body.appendChild(buttonWrapper);
+
+    const explanation = document.createElement('a');
+    explanation.innerText = 'How to use';
+    explanation.className = 'underline text-gray-400 px-4 py-2 border rounded max-w-fit hover:text-gray-600';
+    explanation.href = 'https://github.com/tomz197/os-drill';
+    explanation.target = '_blank';
+    body.appendChild(explanation);
 }
 
 renderPickPartPage();
