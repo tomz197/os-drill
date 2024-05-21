@@ -1,44 +1,63 @@
 import drill from './data.js';
 
-const body = document.querySelector('body');
+const body = document.querySelector('main');
+const buttonPrimary = 'px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ';
 
-/*
+/**
  * @param {number} themeNum
+ * @returns {import('./data.js').Drill}
  */
-function renderTheme(themeNum, testAll = false) {
+function getTheme(themeNum) {
+    return drill.find((theme) => theme.section === themeNum);
+}
+
+/**
+ * @returns {Array.<import('./data.js').Drill>}
+ */
+function getAllThemes() {
+    return drill.reduce((acc, { correct, incorrect }) => {
+        acc.correct.push(...correct);
+        acc.incorrect.push(...incorrect);
+        return acc;
+    }, { correct: [], incorrect: [] });
+}
+
+/**
+ * @param {Array.<string>} array
+ * @returns {Array.<string>}
+ * @description Shuffle an array
+ */
+function shuffle(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+}
+
+/**
+ * @param {number} themeNum
+ * @param {boolean} testAll
+ */
+function renderPartPage(themeNum, testAll = false) {
+    const theme = testAll ? getAllThemes() : getTheme(themeNum);
+    if (theme == null) {
+        throw new Error(`Theme ${themeNum} not found`);
+    }
+
     const backBtn = document.createElement('button');
     backBtn.innerText = '⬅️Back';
-    backBtn.className = 'px-4 py-2 bg-blue-500 text-white rounded';
+    backBtn.className = buttonPrimary + 'max-w-fit';
     backBtn.onclick = () => {
-        renderPickTheme();
+        renderPickPartPage();
     };
     const title = document.createElement('h1');
-    title.innerText = `Part ${testAll ? "all" : themeNum}`;
+    title.innerText = `Part ${testAll ? "all" : `${theme.section}: ${theme.name}`}`;
     title.className = 'text-2xl font-semibold';
 
     body.innerHTML = '';
+    body.className = 'flex flex-col gap-4';
     body.appendChild(backBtn);
     body.appendChild(title);
-
-    const theme = (() => {
-        if (testAll) {
-            return drill.reduce((acc, { correct, incorrect }) => {
-                acc.correct.push(...correct);
-                acc.incorrect.push(...incorrect);
-                return acc;
-            }, { correct: [], incorrect: [] });
-        }
-        return drill.find((theme) => theme.section === themeNum);
-    })();
-    if (theme == null) {
-        alert('theme is null');
-        console.error('theme is null');
-        renderPickTheme();
-        return;
-    }
-    if (!testAll) {
-        title.innerText = `Part ${themeNum} ${theme.name}`;
-    }
 
     const correctNum = 2;
     const incorrectNum = 3;
@@ -74,11 +93,7 @@ function renderTheme(themeNum, testAll = false) {
         mixed.push(theme.incorrect[index]);
     } while (incorrect.length < incorrectNum);
 
-    //shuffle
-    for (let i = mixed.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [mixed[i], mixed[j]] = [mixed[j], mixed[i]];
-    }
+    shuffle(mixed);
 
     const form = document.createElement('form');
     form.className = 'flex flex-col gap-2';
@@ -91,10 +106,10 @@ function renderTheme(themeNum, testAll = false) {
         checkbox.type = 'checkbox';
         checkbox.value = question;
         checkbox.id = `question-${index}`;
-        checkbox.className = 'w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600';
+        checkbox.className = 'w-5 h-5 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2';
 
         const label = document.createElement('label');
-        label.className = 'flex-1';
+        label.className = 'flex-1 cursor-pointer';
         label.id = `question-${index}-label`;
         label.htmlFor = `question-${index}`;
         label.innerHTML = question;
@@ -155,15 +170,15 @@ function renderTheme(themeNum, testAll = false) {
 
     const reload = document.createElement('button');
     reload.innerText = 'Reload';
-    reload.className = 'px-6 py-4 bg-blue-500 text-white rounded';
+    reload.className = buttonPrimary;
     reload.onclick = () => {
-        renderTheme(themeNum, testAll);
+        renderPartPage(themeNum, testAll);
     };
 
     const submit = document.createElement('button');
     submit.type = 'submit';
     submit.innerText = 'Submit';
-    submit.className = 'px-2 py-4 bg-blue-500 text-white rounded';
+    submit.className = buttonPrimary;
     submit.onclick = () => {
         form.onsubmit(new Event('submit'));
         form.appendChild(reload);
@@ -174,41 +189,27 @@ function renderTheme(themeNum, testAll = false) {
     body.appendChild(form);
 }
 
-function renderPickTheme() {
+function renderPickPartPage() {
     body.innerHTML = '<h1 class="text-2xl font-semibold">Pick a part</h1>';
-    drill.forEach(({ section, correct, incorrect, name }) => {
-        if (section == null) {
-            alert('section is null');
-            console.error('section is null');
-            return;
-        }
-        if (correct == null) {
-            alert('correct is null');
-            console.error('correct is null');
-            return;
-        }
-        if (incorrect == null) {
-            alert('incorrect is null');
-            console.error('incorrect is null');
-            return;
-        }
-        if (name == null) {
-            alert('name is null');
-            console.error('name is null');
-            return;
-        }
+    body.className = 'flex flex-col gap-4';
 
+    const buttonWrapper = document.createElement('div');
+    buttonWrapper.className = 'flex flex-wrap gap-2';
+    drill.forEach(({ section, name }) => {
         const button = document.createElement('button');
-        button.className = 'py-2 px-4 m-2 bg-blue-500 text-white rounded';
+        button.className = buttonPrimary + 'grow';
         button.innerText = `Part ${section}: ${name}`;
-        button.onclick = () => renderTheme(section);
-        body.appendChild(button);
+        button.onclick = () => renderPartPage(section);
+        buttonWrapper.appendChild(button);
     });
+
     const button = document.createElement('button');
-    button.className = 'py-2 px-4 m-2 bg-blue-500 text-white rounded';
+    button.className = buttonPrimary;
     button.innerText = `All parts`;
-    button.onclick = () => renderTheme(null, true);
+    button.onclick = () => renderPartPage(null, true);
+
     body.appendChild(button);
+    body.appendChild(buttonWrapper);
 }
 
-renderPickTheme();
+renderPickPartPage();
