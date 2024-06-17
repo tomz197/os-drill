@@ -1,8 +1,8 @@
-import QuestionForm from "@/components/question-form";
+import ExamQuestionForm from "@/components/exam-question-form";
 import { getCorrectIncorrect, getDrills } from "@/lib/utils";
 import { redirect } from "react-router-dom";
 
-function AllParts() {
+function ExamAllParts() {
   const drill = getDrills()
   if (!drill) {
     console.error("Drill not found")
@@ -14,12 +14,12 @@ function AllParts() {
 
   return (
     <>
-      <h2 className="text-xl">All parts</h2>
+      <h2 className="text-xl">Všechny části</h2>
       <div>
-        <QuestionForm facts={correctIncorrect} />
+        <ExamQuestionForm facts={correctIncorrect} />
       </div>
     </>
   )
 }
 
-export default AllParts
+export default ExamAllParts

@@ -9,8 +9,8 @@ import {
   createBrowserRouter,
   RouterProvider,
 } from "react-router-dom";
-import Part from './routes/part';
-import AllParts from './routes/all-parts';
+import ExamPart from './routes/exam-part';
+import ExamAllParts from './routes/all-exam-parts';
 
 const router = createBrowserRouter([{
   path: "/",
@@ -21,12 +21,12 @@ const router = createBrowserRouter([{
       element: <Selection />,
     },
     {
-      path: "drill/:section",
-      element: <Part />,
+      path: "zkouska/:section",
+      element: <ExamPart />,
     },
     {
-      path: "drills",
-      element: <AllParts />,
+      path: "zkouska",
+      element: <ExamAllParts />,
     },
   ],
 }]);

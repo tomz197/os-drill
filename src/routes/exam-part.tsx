@@ -1,8 +1,8 @@
-import QuestionForm from "@/components/question-form";
+import ExamQuestionForm from "@/components/exam-question-form";
 import { getCorrectIncorrect, getDrill } from "@/lib/utils";
 import { redirect, useParams } from "react-router-dom";
 
-function Part() {
+function ExamPart() {
   const { section } = useParams()
   if (!section) {
     console.error("Section or name not found")
@@ -21,12 +21,12 @@ function Part() {
 
   return (
     <>
-      <h2 className="text-xl">Part: {section}: {drill.name}</h2>
+      <h2 className="text-xl">Část: {section}: {drill.name}</h2>
       <div>
-        <QuestionForm facts={correctIncorrect} />
+        <ExamQuestionForm facts={correctIncorrect} />
       </div>
     </>
   )
 }
 
-export default Part
+export default ExamPart

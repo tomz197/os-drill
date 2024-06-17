@@ -4,7 +4,7 @@ import { CorrectIncorrect, cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
 
-function QuestionForm({ facts }: { facts: CorrectIncorrect }) {
+function ExamQuestionForm({ facts }: { facts: CorrectIncorrect }) {
   const [selectedFacts, setSelectedFacts] = useState<CorrectIncorrect>([])
   const [isSubmitted, setIsSubmitted] = useState(false)
 
@@ -54,7 +54,7 @@ function QuestionForm({ facts }: { facts: CorrectIncorrect }) {
           return
         }
         setIsSubmitted(true)
-      }}>{isSubmitted ? "Next question" : "Submit"}</Button>
+      }}>{isSubmitted ? "Další otázka" : "Odeslat"}</Button>
     </>
   )
 }
@@ -68,13 +68,15 @@ function DisplayFact({ fact, correct, isSubmitted }: { fact: string, correct: st
       {isSubmitted && correct && (
         <div className="flex items-center pt-2 gap-2 select-none">
           <p onMouseDown={() => setShowCorrect(!showCorrect)} className="font-bold underline italic cursor-pointer">
-            {showCorrect ? "show incorrect" : "show correct"}
+            {!showCorrect ? "zobrazit správnou" : "zobrazit nesprávnou"}
           </p>
-          <p>{showCorrect ? "(showing correct)" : "(showing incorrect)"}</p>
+          <p className="text-gray-600">
+            {!showCorrect ? "(Zobrazuje se nesprávna odpověď)" : "(Zobrazuje se správna odpověď)"}
+          </p>
         </div>
       )}
     </>
   )
 }
 
-export default QuestionForm
+export default ExamQuestionForm
