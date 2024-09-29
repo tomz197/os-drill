@@ -1,22 +1,22 @@
-import path from "path"
-import react from "@vitejs/plugin-react"
-import { defineConfig, loadEnv } from "vite"
+import path from "path";
+import react from "@vitejs/plugin-react";
+import { defineConfig, loadEnv } from "vite";
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd())
+  const env = loadEnv(mode, process.cwd());
 
   if (!env.VITE_HOST) {
-    throw new Error("VITE_HOST is required")
+    throw new Error("VITE_HOST is required");
   }
   if (!env.VITE_PORT) {
-    throw new Error("VITE_PORT is required")
+    throw new Error("VITE_PORT is required");
   }
   if (isNaN(parseInt(env.VITE_PORT))) {
-    throw new Error("VITE_PORT must be a number")
+    throw new Error("VITE_PORT must be a number");
   }
 
   return {
-    base: '/os-drill/',
+    base: "/os-drill/",
     plugins: [react()],
     resolve: {
       alias: {
@@ -34,4 +34,4 @@ export default defineConfig(({ mode }) => {
       origin: `http://0.0.0.0:${env.VITE_PORT}`,
     },
   };
-})
+});
