@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    base: '/vite-deploy-demo/',
+    base: '/os-drill/',
     plugins: [react()],
     resolve: {
       alias: {
