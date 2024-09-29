@@ -1,4 +1,4 @@
-# OSzk-drill
+# OSzk drill
 
 ## Usage
 
