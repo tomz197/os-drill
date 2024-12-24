@@ -30,7 +30,7 @@ const router = createBrowserRouter(
       ],
     },
   ],
-  { basename: "/os-drill" },
+  { basename: "/" },
 );
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

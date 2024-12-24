@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
   }
 
   return {
-    base: "/os-drill/",
+    base: "/",
     plugins: [react()],
     resolve: {
       alias: {
