@@ -16,6 +16,7 @@ function Selection() {
           </Button>
         </Link>
       ))}
+      {/*
       <h2 className="text-xl">Zápočet</h2>
       <a
         href="https://github.com/Futupas/PB152OperackyDrill/tree/main"
@@ -23,6 +24,7 @@ function Selection() {
       >
         <Button className="w-full">Zde najdete zápočet</Button>
       </a>
+      */}
     </>
   );
 }
