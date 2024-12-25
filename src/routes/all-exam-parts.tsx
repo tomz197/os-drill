@@ -5,16 +5,16 @@ import { redirect } from "react-router-dom";
 
 function ExamAllParts() {
   const [question, setQuestion] = useState<CorrectIncorrect | null>(null);
-  const drill = getDrills();
 
   const resetQuestion = useCallback(() => {
+    const drill = getDrills();
     if (!drill) {
       console.error("Drill not found");
       redirect("/");
       return null;
     }
     setQuestion(getCorrectIncorrect(drill));
-  }, [drill]);
+  }, []);
 
   useEffect(() => {
     resetQuestion();
