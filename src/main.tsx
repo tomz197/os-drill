@@ -8,6 +8,8 @@ import Selection from "./routes/selection";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import ExamPart from "./routes/exam-part";
 import ExamAllParts from "./routes/all-exam-parts";
+import { CreditPage } from "./pages/credit/[sectionUUID]";
+import { CreditAllPage } from "./pages/credit";
 
 const router = createHashRouter(
   [
@@ -26,6 +28,14 @@ const router = createHashRouter(
         {
           path: "zkouska",
           element: <ExamAllParts />,
+        },
+        {
+          path: "zapocet",
+          element: <CreditAllPage />,
+        },
+        {
+          path: "zapocet/:sectionUUID",
+          element: <CreditPage />,
         },
       ],
     },

@@ -1,6 +1,7 @@
 import drillData from "@/lib/data";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { creditData } from "@/lib/credit-repository/data";
 
 function Selection() {
   return (
@@ -16,15 +17,17 @@ function Selection() {
           </Button>
         </Link>
       ))}
-      {/*
       <h2 className="text-xl">Zápočet</h2>
-      <a
-        href="https://github.com/Futupas/PB152OperackyDrill/tree/main"
-        target="_blank"
-      >
-        <Button className="w-full">Zde najdete zápočet</Button>
-      </a>
-      */}
+      <Link to="/zapocet">
+        <Button className="w-full">Všechny části</Button>
+      </Link>
+      {creditData.map((drill, i) => (
+        <Link key={i} to={`/zapocet/${drill.uuid}`}>
+          <Button key={i} variant="outline" className="w-full">
+            {drill.title}
+          </Button>
+        </Link>
+      ))}
     </>
   );
 }
