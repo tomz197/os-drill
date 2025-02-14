@@ -1,5 +1,5 @@
 import ExamQuestionForm from "@/components/exam-question-form";
-import { CorrectIncorrect, getCorrectIncorrect, getDrill } from "@/lib/utils";
+import { CorrectIncorrect, examRepository } from "@/lib/exam-repository";
 import { useCallback, useEffect, useState } from "react";
 import { redirect, useParams } from "react-router-dom";
 
@@ -15,14 +15,14 @@ function ExamPart() {
       return;
     }
 
-    const drill = getDrill({ section: parseInt(section) });
+    const drill = examRepository.getDrillSingle({ section: parseInt(section) });
     if (!drill) {
       console.error("Drill not found");
       redirect("/");
       return;
     }
 
-    setQuestion(getCorrectIncorrect(drill));
+    setQuestion(examRepository.getCorrectIncorrect(drill));
   }, [section]);
 
   useEffect(() => {
@@ -35,7 +35,10 @@ function ExamPart() {
     <>
       <h2 className="text-xl">
         Část: {section}:{" "}
-        {!section ? "" : getDrill({ section: parseInt(section) })?.name ?? ""}
+        {!section
+          ? ""
+          : examRepository.getDrillSingle({ section: parseInt(section) })
+              ?.name ?? ""}
       </h2>
       <div>
         <ExamQuestionForm facts={question} resetQuestion={resetQuestion} />

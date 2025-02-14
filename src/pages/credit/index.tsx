@@ -19,8 +19,8 @@ export function CreditAllPage() {
       return;
     }
 
-    setTrueStatements(statements.slice(0, 3));
-    setFalseStatements(statements.slice(3, 5));
+    setTrueStatements(statements.slice(0, 2));
+    setFalseStatements(statements.slice(2, 5));
   }, []);
 
   useEffect(() => {

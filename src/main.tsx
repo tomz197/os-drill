@@ -3,13 +3,13 @@ import React from "react";
 import "./index.css";
 
 import ReactDOM from "react-dom/client";
-import Root from "@/routes/root.tsx";
-import Selection from "./routes/selection";
+import Root from "@/pages/layout";
+import LandingPage from "./pages";
 import { createHashRouter, RouterProvider } from "react-router-dom";
-import ExamPart from "./routes/exam-part";
-import ExamAllParts from "./routes/all-exam-parts";
 import { CreditPage } from "./pages/credit/[sectionUUID]";
 import { CreditAllPage } from "./pages/credit";
+import ExamPart from "./pages/exam/[section]";
+import ExamAllParts from "./pages/exam";
 
 const router = createHashRouter(
   [
@@ -19,22 +19,22 @@ const router = createHashRouter(
       children: [
         {
           path: "",
-          element: <Selection />,
+          element: <LandingPage />,
         },
         {
-          path: "zkouska/:section",
+          path: "exam/:section",
           element: <ExamPart />,
         },
         {
-          path: "zkouska",
+          path: "exam",
           element: <ExamAllParts />,
         },
         {
-          path: "zapocet",
+          path: "credit",
           element: <CreditAllPage />,
         },
         {
-          path: "zapocet/:sectionUUID",
+          path: "credit/:sectionUUID",
           element: <CreditPage />,
         },
       ],

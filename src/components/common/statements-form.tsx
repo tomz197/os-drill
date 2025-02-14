@@ -126,7 +126,7 @@ function StatementCheckbox({
 
       {submited &&
         checked &&
-        (type == "incorrect" ? (
+        (type == "correct" ? (
           <span>
             <Check className="w-10 h-10" />
           </span>

@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { CorrectIncorrect, cn } from "@/lib/utils";
+import { CorrectIncorrect } from "@/lib/exam-repository";
+import { cn } from "@/lib/utils";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
 

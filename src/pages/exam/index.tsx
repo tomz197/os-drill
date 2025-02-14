@@ -1,5 +1,5 @@
 import ExamQuestionForm from "@/components/exam-question-form";
-import { CorrectIncorrect, getCorrectIncorrect, getDrills } from "@/lib/utils";
+import { CorrectIncorrect, examRepository } from "@/lib/exam-repository";
 import { useCallback, useEffect, useState } from "react";
 import { redirect } from "react-router-dom";
 
@@ -7,13 +7,13 @@ function ExamAllParts() {
   const [question, setQuestion] = useState<CorrectIncorrect | null>(null);
 
   const resetQuestion = useCallback(() => {
-    const drill = getDrills();
+    const drill = examRepository.getDrillMany();
     if (!drill) {
       console.error("Drill not found");
       redirect("/");
       return null;
     }
-    setQuestion(getCorrectIncorrect(drill));
+    setQuestion(examRepository.getCorrectIncorrect(drill));
   }, []);
 
   useEffect(() => {
