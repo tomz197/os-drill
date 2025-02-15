@@ -42,7 +42,7 @@ jobs:
         run: npm ci
       - name: Build page
         run: npm run build
-      - name: Create CNAME
+      - name: Setup CNAME
         run: echo "os.zifcak.dev" > ./dist/CNAME
 
       - name: Deploy
