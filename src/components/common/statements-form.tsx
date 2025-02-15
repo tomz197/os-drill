@@ -2,8 +2,16 @@ import { Statement } from "@/lib/common/types";
 import { Checkbox } from "../ui/checkbox";
 import { useMemo, useState } from "react";
 import { cn, generateKey, shuffle } from "@/lib/utils";
-import { Check, X } from "lucide-react";
+import { Check, Link, X } from "lucide-react";
 import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 export function StatementsForm({
   title,
@@ -67,6 +75,9 @@ export function StatementsForm({
       >
         {submited ? "Další otázka" : "Odeslat"}
       </Button>
+      <div className="w-full flex justify-end">
+        <ReportIssue />
+      </div>
     </div>
   );
 }
@@ -141,6 +152,49 @@ function StatementCheckbox({
           </span>
         ))}
     </div>
+  );
+}
+
+function ReportIssue() {
+  return (
+    <Dialog>
+      <DialogTrigger asChild>
+        <Button variant="outline">Nahlásit chybu</Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Vyberte si jak nahlásit chybu</DialogTitle>
+          <DialogDescription>
+            Nahlášení chyby můžete provést buď přes Discord nebo přes Github.
+            <br />
+            <br />
+            Pokud chcete nahlásit chybu přes Discord, pripojte se na náš server
+            a napište nám (
+            <a
+              href="https://discord.gg/ztabDQ4jNv"
+              className="underline text-foreground hover:text-blue-500"
+              target="_blank"
+            >
+              link pro připojení
+              <Link className="w-3 h-3 inline self-center" />
+            </a>
+            ).
+            <br />
+            <br />
+            Pokud chcete nahlásit chybu přes Github, vytvořte issue(
+            <a
+              href="https://github.com/tomz197/os-drill/issues/new"
+              className="underline text-foreground hover:text-blue-500"
+              target="_blank"
+            >
+              link pro vytoření issue
+              <Link className="w-3 h-3 inline self-center" />
+            </a>
+            ).
+          </DialogDescription>
+        </DialogHeader>
+      </DialogContent>
+    </Dialog>
   );
 }
 
