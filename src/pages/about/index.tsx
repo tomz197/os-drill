@@ -20,13 +20,13 @@ export function AboutPage() {
           predmetu PB152(Operačné systémy) v zkúškovej/zápočtovej forme.
         </p>
         <p>
-          Kód tejto aplikácie je otvorený a je dostupný na{" "}
+          Kód tejto aplikácie je otvorený a dostupný na{" "}
           <a
             href="https://github.com/tomz197/os-drill"
             className="underline hover:text-blue-500"
             target="_blank"
           >
-            Github
+            Githube
             <Link className="w-3 h-3 inline self-center" />
           </a>
           .
