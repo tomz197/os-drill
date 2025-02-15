@@ -44,7 +44,7 @@ export function AboutPage() {
           </a>{" "}
           alebo vytvor issue, pull request alebo diskusiu na Githube.
         </p>
-        <p className="font-semibold">Každá pomoc je vítaná! </p>
+        <p className="font-semibold">Každá pomoc je vítaná!</p>
       </div>
     </div>
   );

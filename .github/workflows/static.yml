@@ -42,6 +42,8 @@ jobs:
         run: npm ci
       - name: Build page
         run: npm run build
+      - name: Create CNAME
+        run: echo "os.zifcak.dev" > ./dist/CNAME
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
