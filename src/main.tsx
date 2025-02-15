@@ -10,6 +10,7 @@ import { CreditPage } from "./pages/credit/[sectionUUID]";
 import { CreditAllPage } from "./pages/credit";
 import ExamPart from "./pages/exam/[section]";
 import ExamAllParts from "./pages/exam";
+import { AboutPage } from "./pages/about";
 
 const router = createHashRouter(
   [
@@ -20,6 +21,10 @@ const router = createHashRouter(
         {
           path: "",
           element: <LandingPage />,
+        },
+        {
+          path: "about",
+          element: <AboutPage />,
         },
         {
           path: "exam/:section",

@@ -1,32 +1,51 @@
 import { Button } from "@/components/ui/button";
+import { Github } from "lucide-react";
+import Discord from "@/assets/discord-icon";
 import { Link, Outlet } from "react-router-dom";
 
 function Root() {
   return (
     <>
-      <header className="p-4 flex justify-between items-center">
+      <header className="px-4 py-1 flex justify-between items-center">
         <Link to="/">
-          <h1 className="text-3xl font-semibold">PB152 procvičení</h1>
+          <h1 className="text-3xl font-bold">
+            PB152<span className="text-xl font-light">drill</span>
+          </h1>
         </Link>
-        <a
-          href="https://github.com/tomz197/os-drill"
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Button variant="outline">Více info</Button>
-        </a>
+        <div className="flex gap-1 items-center">
+          <Link to="/about">
+            <Button variant="ghost">O nás</Button>
+          </Link>
+          <div className="h-6 w-[0.1rem] bg-border rounded-full"></div>
+          <a href="https://github.com/tomz197/os-drill" target="_blank">
+            <Button variant="ghost" size="icon">
+              <Github />
+            </Button>
+          </a>
+        </div>
       </header>
-      <main className="p-4 border-y flex flex-col gap-2">
+      <div className="h-[0.1rem] w-full bg-border rounded-full"></div>
+      <main className="p-4 f slex flex-1 flex-col gap-2">
         <Outlet />
       </main>
-      <footer className="p-4 text-center">
+      <div className="h-[0.1rem] w-full bg-border rounded-full"></div>
+      <footer className="p-4 flex justify-center gap-2">
         <a
           href="https://github.com/tomz197/os-drill"
           target="_blank"
-          className="text-grey-400 hover:text-blue-500"
-          rel="noreferrer"
+          className="text-grey-400 hover:text-blue-500 flex items-center gap-1"
         >
           Github
+          <Github className="w-5 h-5 inline" />
+        </a>
+        <div className="h-6 w-[0.1rem] bg-border rounded-full"></div>
+        <a
+          href="https://discord.gg/ztabDQ4jNv"
+          className="text-grey-400 hover:text-blue-500 flex items-center gap-1"
+          target="_blank"
+        >
+          Discord
+          <Discord className="w-6 h-6 stroke-[1.5] inline" />
         </a>
       </footer>
     </>

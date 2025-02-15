@@ -77,5 +77,5 @@
 }
 
 #root {
-  @apply min-h-dvh max-w-screen-lg mx-auto grid grid-rows-[auto_1fr_auto];
+  @apply min-h-dvh max-w-screen-lg mx-auto grid grid-rows-[auto_auto_1fr_auto_auto];
 }

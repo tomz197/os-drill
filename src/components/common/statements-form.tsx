@@ -28,7 +28,12 @@ export function StatementsForm({
 
   return (
     <div className="flex flex-col gap-4">
-      <h2 className="text-2xl">{title}</h2>
+      <div>
+        <h2 className="text-2xl">{title}</h2>
+        <p className="font-medium text-sm">
+          Zaškrtněte správné výroky({correct.length})
+        </p>
+      </div>
       <div>
         {shuffledStatements.map((statement, i) => (
           <StatementCheckbox
