@@ -122,7 +122,9 @@ function StatementCheckbox({
       />
 
       <div className="flex-1">
-        <p>{showCorrect ? statement.correct : statement.incorrect}</p>
+        <p className="whitespace-pre-wrap">
+          {showCorrect ? statement.correct : statement.incorrect}
+        </p>
         {submited && type == "incorrect" && (
           <div className="flex items-center pt-2 gap-2 select-none">
             <p
