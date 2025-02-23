@@ -284,4 +284,290 @@ export const creditData: CreditData = [
       },
     ],
   },
+  {
+    uuid: "e42328b0-abcd-4859-b969-112b81be8d33",
+    title: "Část 2: Virtualizace procesoru",
+    statements: [
+      {
+        correct:
+          "Virtualizace procesoru umožňuje více vláken sdílet jeden fyzický procesor bez ztráty iluze samostatného běhu.",
+        incorrect:
+          "Virtualizace procesoru vylučuje současný běh více vláken a vyžaduje oddělené procesory pro každé vlákno.",
+        uuid: "6ec2a08c-f79f-484f-b477-cea5fa3380b7",
+      },
+      {
+        correct:
+          "Instrukce řízení toku určují, kam se posune programový čítač, což řídí posloupnost vykonávaných příkazů.",
+        incorrect:
+          "Instrukce řízení toku mění velikost paměti programu a nemají vliv na pořadí prováděných příkazů.",
+        uuid: "e44e311a-2c7c-414d-81da-23c0e6abdf6d",
+      },
+      {
+        correct:
+          "Registr programového čítače obsahuje virtuální adresu aktuálně vykonávané instrukce a není přístupný běžnými aritmetickými příkazy.",
+        incorrect:
+          "Registr programového čítače uchovává vždy fyzickou adresu a lze do něj zapisovat běžnými instrukcemi add.",
+        uuid: "c1367c22-2eab-4f6d-bb89-08aa0863b088",
+      },
+      {
+        correct:
+          "Aritmetický registr je pojmenován přímo v instrukci, zatímco paměťovou adresu lze vypočítat dynamicky.",
+        incorrect:
+          "Aritmetický registr se indexuje podobně jako paměťová buňka a není pevně pojmenován v instrukci.",
+        uuid: "92dc90fb-ff7e-4c59-85e5-9af2b78dddbc",
+      },
+      {
+        correct:
+          "Instrukce definujeme jako elementární příkazy, které nelze dělit na menší strojově proveditelné části.",
+        incorrect:
+          "Instrukce lze svévolně rozkládat na menší úseky, které procesor vykonává nezávisle na kódování.",
+        uuid: "cf3b3c41-b96c-42ca-acbb-4d5a81905986",
+      },
+      {
+        correct:
+          "Rodina instrukcí add zahrnuje varianty s různými zdrojovými registry a rozdílnými cíli pro výsledek operace.",
+        incorrect:
+          "Všechny instrukce add používají vždy stejný zdrojový registr a vždy ukládají výsledek jen do rv.",
+        uuid: "0aa1fcd1-b2ca-4fc8-8c22-28f965e4db5e",
+      },
+      {
+        correct:
+          "Efekt instrukce spočívá ve změně stavu procesoru a případně paměti, což posouvá výpočet o krok dál.",
+        incorrect:
+          "Efekt libovolné instrukce nikdy nezasahuje do stavu procesoru ani nemůže ovlivnit obsah paměti.",
+        uuid: "09cc6202-9ec8-4024-b30d-e19b04964f1f",
+      },
+      {
+        correct:
+          "Program se většinou provádí lineárně od nižších k vyšším adresám, pokud jej nepřeruší instrukce skoku.",
+        incorrect:
+          "Program se vždy provádí striktně vzestupně bez jakékoliv možnosti návratu k dřívějším instrukcím.",
+        uuid: "18148afd-1ea4-44a7-8c33-67a3d435afd4",
+      },
+      {
+        correct:
+          "Zásobník slouží k izolaci lokálních dat podprogramu a k uložení stavu pro návrat do volajícího kódu.",
+        incorrect:
+          "Zásobník obsahuje globální proměnné a nesouvisí s uchováváním návratové adresy podprogramu.",
+        uuid: "68730ce7-76d9-45e6-b6ca-c4bb116a8270",
+      },
+      {
+        correct:
+          "Aktivace podprogramu obvykle posune ukazatel zásobníku a uloží registr pro návrat do vyššího rámce.",
+        incorrect:
+          "Aktivace podprogramu nezmění ukazatel zásobníku a nikdy neukládá návratovou adresu ani žádné registry.",
+        uuid: "5e4acccc-6f08-4f4c-b26e-5a6e801b6ac8",
+      },
+      {
+        correct:
+          "Každý aktivační záznam na zásobníku odpovídá právě jedné běžící instanci podprogramu včetně jeho lokálních proměnných.",
+        incorrect:
+          "Aktivační záznamy na zásobníku nejsou spojeny s podprogramy, takže jeden záznam může pokrývat víc funkcí zároveň.",
+        uuid: "3fada798-bbcb-4571-b08b-a83b474cc9bf",
+      },
+      {
+        correct:
+          "Stav procesoru tvoří aritmetické registry, programový čítač a ukazatel zásobníku, které se mění vykonáváním instrukcí.",
+        incorrect:
+          "Stav procesoru zahrnuje pouze obsah operační paměti a nezávisí na hodnotách registrů nebo čítače instrukcí.",
+        uuid: "2b22d36f-36eb-4239-acbb-a58c6a66d6d9",
+      },
+      {
+        correct:
+          "Pokud do adresního prostoru zasahují externí aktéři, výpočet už není deterministicky řízen jen počátečním stavem a kódem.",
+        incorrect:
+          "Adresní prostor programu nemůže nikdy měnit nic zvenčí, proto je průběh vlákna vždy plně předvídatelný.",
+        uuid: "135db0b0-d689-4417-bb3b-92f47efc1c36",
+      },
+      {
+        correct:
+          "Externí událost, jako zápis do sdílené paměti, může změnit průběh vlákna čekajícího v synchronizační smyčce.",
+        incorrect:
+          "Vlákno nikdy neovlivní událost zapsaná jiným procesem do sdílené paměti, takže synchronizace není nutná.",
+        uuid: "4ff186bc-36b2-4fe4-9dbd-8d459c9d4d4a",
+      },
+      {
+        correct:
+          "Vlákno je posloupnost stavů, kterou vyvolá činnost jediného procesoru řízeného jedním programem v rámci adresního prostoru.",
+        incorrect:
+          "Vlákno může být řízeno libovolným počtem programů současně a sdílí vždy víc fyzických procesorů najednou.",
+        uuid: "4ae0aa65-9365-4da4-ad65-7ea7dd037272",
+      },
+      {
+        correct:
+          "Logický procesor má stav definovaný hodnotami registrů a vykonává instrukce, které tento stav mění.",
+        incorrect:
+          "Logický procesor neobsahuje žádné registry a nemůže samostatně provádět instrukce bez součinnosti jiného vlákna.",
+        uuid: "c4837bfa-21cf-4fc3-8074-72b148ab6935",
+      },
+      {
+        correct:
+          "K přepnutí vlákna je nutné uložit aktuální hodnoty registrů a později je obnovit v novém vlákně.",
+        incorrect:
+          "Přepnutí vlákna nevyžaduje zachování registrů, protože nový stav vzniká vždy z náhodných hodnot paměti.",
+        uuid: "7adad147-a1d8-431c-ba40-bdbe6f3371b8",
+      },
+      {
+        correct:
+          "Obnovení programového čítače při přepnutí vláken je nejproblematičtější, protože vede k okamžité ztrátě kontroly operačního systému.",
+        incorrect:
+          "Obnovení programového čítače při přepnutí vláken je nejjednodušší krok, protože jej lze měnit běžným příkazem add.",
+        uuid: "81a163d3-2eaa-45d7-b9fc-66a036b7a867",
+      },
+      {
+        correct:
+          "Plánovač rozhoduje, které vlákno dostane procesor, a může aktivní vlákno kdykoliv preemptivně přerušit.",
+        incorrect:
+          "Plánovač nemá pravomoc přerušit běžící vlákno, protože veškeré přepnutí se děje vždy s jeho souhlasem.",
+        uuid: "fd85a5f6-0b7c-4411-b640-9485944afc49",
+      },
+      {
+        correct:
+          "Preemptivní plánovač využívá hardwarový časovač, jenž pravidelným přerušením umožňuje systému odebírat procesor aktivnímu vláknu.",
+        incorrect:
+          "Preemptivní plánovač nepoužívá časovač a spolehne se výhradně na dobrovolné uvolnění procesoru běžícím vláknem.",
+        uuid: "469d27d6-2d3f-4eef-83f1-39710d2bca86",
+      },
+      {
+        correct:
+          "Plánovač se snaží vybalancovat propustnost a latenci, aby se vlákna rychle střídala a zároveň nezdržovala přepínáním.",
+        incorrect:
+          "Maximalizace propustnosti vyžaduje extrémně časté střídání vláken, které zcela eliminuje odezvu interaktivních úloh.",
+        uuid: "1024fb93-94f3-4b47-8eae-6d1e275bb98f",
+      },
+      {
+        correct:
+          "Vlákno v stavu čekání na událost se probudí, jakmile nastane externí podmínka, o kterou žádalo.",
+        incorrect:
+          "Vlákno označené jako čekající na událost lze vzbudit libovolnou instrukcí add prováděnou v jiném vlákně.",
+        uuid: "7a934e58-5339-4b83-bacd-1b1bc5661c13",
+      },
+      {
+        correct:
+          "Vlákno čekající na procesor je připraveno k běhu, ale dosud mu nebyl znovu přidělen žádný fyzický procesor.",
+        incorrect:
+          "Vlákno čekající na procesor je vždy nutně zablokováno kvůli nedostupným datům a nemůže pokračovat ve výpočtu.",
+        uuid: "54c18aeb-dd23-45a5-b7db-e778acd95303",
+      },
+      {
+        correct:
+          "Fronty úloh slouží k řazení vláken čekajících na přidělení procesoru podle priority nebo zásady FIFO.",
+        incorrect:
+          "Fronty úloh nelze využít k plánování vláken, protože všechny procesory vždy přijímají libovolné vlákno přímo.",
+        uuid: "24e9dd50-0a1b-427d-b2a9-217ac5a541f3",
+      },
+      {
+        correct:
+          "Lokální fronty ke konkrétním procesorům mohou snižovat migrace vláken, ale znesnadňují rovnoměrné vytížení všech CPU.",
+        incorrect:
+          "Použití jediného globálního frontu zcela eliminuje migraci vláken a zaručuje každému procesoru stejnou zátěž.",
+        uuid: "fa00031d-df4c-4597-a070-fb05348b8814",
+      },
+      {
+        correct:
+          "Afinita vláken k určitému procesoru zlepšuje výkon díky menšímu přesunu cache, ale může snížit využití zdrojů.",
+        incorrect:
+          "Afinita vláken k jednomu procesoru neovlivňuje práci cache a nezakazuje jejich přesun mezi různými CPU.",
+        uuid: "9939a47e-9e2a-4d27-b45b-928d5d49c0c4",
+      },
+      {
+        correct:
+          "Kompromis mezi afinitou a rozložením zátěže řeší plánovače, které kradou práci z cizích front při nevyužitém procesoru.",
+        incorrect:
+          "Plánovače obvykle ignorují afinitu vláken a nedokáží přesunout úlohy z přeplněného frontu na procesor bez zátěže.",
+        uuid: "32244408-37c0-4770-a8af-c9fc1e5a077b",
+      },
+      {
+        correct:
+          "Prioritní plánování umožňuje interaktivním vláknům předbíhat ostatní, aby získala nižší latenci při reakcích na uživatele.",
+        incorrect:
+          "Prioritní plánování nutně zvyšuje latenci interaktivních vláken a upřednostňuje vždy výpočetně nejnáročnější úlohy.",
+        uuid: "465a8494-b167-4378-8b5c-00a387b3fbf0",
+      },
+      {
+        correct:
+          "Dynamická úprava priority zabraňuje hladovění vláken s nízkou prioritou, protože časem získají vyšší preferenci.",
+        incorrect:
+          "Dynamická úprava priority je zbytečná, protože vlákna s nízkou prioritou mohou být trvale odsunuta bez důsledků.",
+        uuid: "a89fda37-e810-4786-b1a1-2b23d705dde9",
+      },
+      {
+        correct:
+          "Férové plánování se snaží každému vláknu přidělit stejnou výpočetní dobu, což vede k vyváženému sdílení procesoru.",
+        incorrect:
+          "Férové plánování vždy upřednostňuje vlákna s nejdelší historií běhu a snižuje prioritu nově spuštěným úlohám.",
+        uuid: "b2be1f12-2bb9-4d79-930c-0b1147523108",
+      },
+      {
+        correct:
+          "Inverzní hodnota dosud spotřebovaného času může určovat prioritu vlákna v systému férového plánování.",
+        incorrect:
+          "Férové plánování ignoruje dosud spotřebovaný čas, takže vlákna s dlouhým během mají vždy nejvyšší prioritu.",
+        uuid: "2883455f-6fae-4234-a000-5cecaf6e6128",
+      },
+      {
+        correct:
+          "Plánovací kvantum omezuje, jak dlouho může vlákno nepřetržitě běžet, čímž zabraňuje blokaci ostatních úloh.",
+        incorrect:
+          "Plánovací kvantum nesouvisí s dobou běhu vlákna a nijak neovlivňuje přepínání mezi různými procesy.",
+        uuid: "12bff9d4-8358-4276-9680-162d9967de67",
+      },
+      {
+        correct:
+          "V moderních preemptivních systémech vlákno nebývá odstavováno dobrovolně, ale je přerušeno časovačem nebo jinou událostí.",
+        incorrect:
+          "V preemptivních systémech se vlákno vždy vypíná samo, protože procesor neumí běžící vlákno přerušit.",
+        uuid: "73d983c7-10f2-4bf5-89ba-a059e31dcf32",
+      },
+      {
+        correct:
+          "Pokud vlákno čeká na vstup z periférie, operační systém jej uspí a probudí, jakmile dorazí požadovaná data.",
+        incorrect:
+          "Vlákno čekající na periférii nesmí být uspáno a musí neustále aktivně zjišťovat dostupnost dat v paměti.",
+        uuid: "a91c4fea-8aa7-4717-94e1-6a9bec59927a",
+      },
+      {
+        correct:
+          "Při soutěži o vzácný zdroj je probuzeno jen první vlákno z čekací fronty, aby nedošlo k opětovnému blokování.",
+        incorrect:
+          "Při uvolnění vzácného zdroje se probouzejí současně všechna čekající vlákna, čímž se rychleji vyřeší konflikt.",
+        uuid: "ecc82b0d-1330-4783-be2f-879c060b64b0",
+      },
+      {
+        correct:
+          "Krátké plánovací kvantum zlepšuje reakční dobu interaktivních aplikací, ale může snižovat celkovou propustnost procesoru.",
+        incorrect:
+          "Krátké plánovací kvantum maximalizuje propustnost výpočetních úloh a neomezuje vůbec odezvu interaktivních programů.",
+        uuid: "d934ad18-16d5-4e76-8d2f-703a81fc0296",
+      },
+      {
+        correct:
+          "Synchronizace umožňuje koordinovat sdílení společných dat mezi více vlákny, čímž zabraňuje konfliktům a nekonzistentním stavům.",
+        incorrect:
+          "Synchronizace slouží výhradně k zvyšování výkonu a nebrání konfliktům při manipulaci se sdílenými proměnnými.",
+        uuid: "403dc206-9d39-49f1-b649-f0c644cca02b",
+      },
+      {
+        correct:
+          "Podmíněné skoky používají stavový příznak nebo registr ke změně adresy v programovém čítači a ovlivňují tok programu.",
+        incorrect:
+          "Podmíněné skoky nelze provádět na základě žádných registrů ani stavových příznaků, takže vždy pokračují sekvenčně.",
+        uuid: "39a29259-1081-471c-9ada-727957ea4399",
+      },
+      {
+        correct:
+          "Podprogram může mít rekurzivní volání, která vyžadují opakované vytváření nových aktivačních záznamů na zásobníku.",
+        incorrect:
+          "Podprogram s rekurzí používá vždy pouze jeden aktivační záznam, protože další volání nepřepisují stav zásobníku.",
+        uuid: "a586beb5-9961-4caa-b5ab-f89a1d189a6d",
+      },
+      {
+        correct:
+          "Více vláken v jednom procesu může sdílet adresní prostor, ale mají oddělené zásobníky a stav procesoru.",
+        incorrect:
+          "Vlákna uvnitř stejného procesu musejí používat jediný společný zásobník i identické registry pro sčítání.",
+        uuid: "86ab3f8b-0211-46b9-b799-3f0f5998cd63",
+      },
+    ],
+  },
 ];
