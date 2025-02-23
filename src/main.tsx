@@ -8,9 +8,9 @@ import LandingPage from "./pages";
 import { createHashRouter, RouterProvider } from "react-router-dom";
 import { CreditPage } from "./pages/credit/[sectionUUID]";
 import { CreditAllPage } from "./pages/credit";
-import ExamPart from "./pages/exam/[section]";
-import ExamAllParts from "./pages/exam";
 import { AboutPage } from "./pages/about";
+import { ExamPage } from "./pages/exam/[section]";
+import { ExamAllPage } from "./pages/exam";
 
 const router = createHashRouter(
   [
@@ -27,20 +27,20 @@ const router = createHashRouter(
           element: <AboutPage />,
         },
         {
-          path: "exam/:section",
-          element: <ExamPart />,
+          path: "exam/:sectionUUID",
+          element: <ExamPage />,
         },
         {
           path: "exam",
-          element: <ExamAllParts />,
-        },
-        {
-          path: "credit",
-          element: <CreditAllPage />,
+          element: <ExamAllPage />,
         },
         {
           path: "credit/:sectionUUID",
           element: <CreditPage />,
+        },
+        {
+          path: "credit",
+          element: <CreditAllPage />,
         },
       ],
     },

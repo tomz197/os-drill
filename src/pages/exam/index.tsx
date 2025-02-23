@@ -1,35 +1,40 @@
-import ExamQuestionForm from "@/components/exam-question-form";
-import { CorrectIncorrect, examRepository } from "@/lib/exam-repository";
-import { useCallback, useEffect, useState } from "react";
+import { Statement } from "@/lib/common/types";
+import examRepository from "@/lib/exam-repository";
+import { useEffect, useState, useCallback } from "react";
 import { redirect } from "react-router-dom";
+import { StatementsForm } from "@/components/common/statements-form";
 
-function ExamAllParts() {
-  const [question, setQuestion] = useState<CorrectIncorrect | null>(null);
+export function ExamAllPage() {
+  const [trueStatements, setTrueStatements] = useState<Statement[]>([]);
+  const [falseStatements, setFalseStatements] = useState<Statement[]>([]);
 
-  const resetQuestion = useCallback(() => {
-    const drill = examRepository.getDrillMany();
-    if (!drill) {
-      console.error("Drill not found");
+  const resetStatements = useCallback(() => {
+    const [statements, error] = examRepository.getRandomStatements({
+      count: 5,
+    });
+
+    if (error) {
+      console.error("Statements not found");
       redirect("/");
-      return null;
+      return;
     }
-    setQuestion(examRepository.getCorrectIncorrect(drill));
+
+    setTrueStatements(statements.slice(0, 2));
+    setFalseStatements(statements.slice(2, 5));
   }, []);
 
   useEffect(() => {
-    resetQuestion();
-  }, [resetQuestion]);
+    resetStatements();
+  }, [resetStatements]);
 
-  if (!question) return null;
+  if (!trueStatements || !falseStatements) return null;
 
   return (
-    <>
-      <h2 className="text-xl">Všechny části</h2>
-      <div>
-        <ExamQuestionForm facts={question} resetQuestion={resetQuestion} />
-      </div>
-    </>
+    <StatementsForm
+      title={"Všechny části"}
+      correct={trueStatements}
+      incorrect={falseStatements}
+      refresh={resetStatements}
+    />
   );
 }
-
-export default ExamAllParts;

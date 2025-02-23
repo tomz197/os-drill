@@ -1,82 +1,71 @@
-import drillData, { Drill } from "@/lib/exam-repository/data";
+import { Result, Section, Statement } from "../common/types";
+import { examData } from "./data";
 
-interface getDrillProps {
-  section?: number;
-  name?: string;
-}
+function getSingleSection({ uuid }: { uuid: string }): Result<Section> {
+  const foundSection = examData.find((section) => section.uuid === uuid);
 
-function getDrillSingle({ section, name }: getDrillProps): Drill | null {
-  switch (true) {
-    case !section:
-      return drillData.find((drill) => drill.name === name) ?? null;
-    case !name:
-      return drillData.find((drill) => drill.section === section) ?? null;
-    default:
-      return null;
+  if (!foundSection) {
+    return [null, new Error("Section not found")];
   }
+
+  return [foundSection, null];
 }
 
-function getDrillMany(): Drill {
-  return {
-    section: -1,
-    name: "All parts",
-    correct: drillData.flatMap((drill) => drill.correct),
-    incorrect: drillData.flatMap((drill) => drill.incorrect),
-  };
+function getAllSections(): Result<Section[]> {
+  return [examData, null];
 }
 
-export type CorrectIncorrect = {
-  fact: string;
-  isCorrect: boolean;
-  correct: string | null;
-}[];
-function getCorrectIncorrect(drill: Drill): CorrectIncorrect {
-  if (drill.correct.length !== drill.incorrect.length) {
-    throw new Error("Correct and incorrect arrays must have the same length");
+function getSingleStatement({ uuid }: { uuid: string }): Result<Statement> {
+  const foundStatement = examData
+    .map((section) => section.statements)
+    .flat()
+    .find((statement) => statement.uuid === uuid);
+
+  if (!foundStatement) {
+    return [null, new Error("Statement not found")];
   }
-  const length = drill.correct.length;
-  const pickedFacts = new Array(5).fill(() =>
-    Math.floor(Math.random() * length),
+
+  return [foundStatement, null];
+}
+
+function getAllStatements(): Result<Statement[]> {
+  const allStatements = examData.map((section) => section.statements).flat();
+
+  return [allStatements, null];
+}
+
+function getRandomStatements({
+  count = 5,
+  sections,
+}: {
+  count?: number;
+  sections?: string[]; // if omitted, all sections are used
+}): Result<Statement[]> {
+  const filteredSections = examData.filter((section) =>
+    sections ? sections.includes(section.uuid) : true,
   );
 
-  const correctNum = 2;
-  const incorrectNum = 3;
+  const allStatements = filteredSections
+    .map((section) => section.statements)
+    .flat();
 
-  const result: CorrectIncorrect = [];
-
-  for (let i = 0; i < correctNum; i++) {
-    const index = pickedFacts[i]();
-    result.push({
-      fact: drill.correct[index],
-      isCorrect: true,
-      correct: null,
-    });
+  if (allStatements.length < count) {
+    return [null, new Error("Not enough statements")];
   }
 
-  for (let i = 0; i < incorrectNum; i++) {
-    const index = pickedFacts[i + correctNum]();
-    result.push({
-      fact: drill.incorrect[index],
-      isCorrect: false,
-      correct: drill.correct[index],
-    });
-  }
+  const randomStatements = allStatements
+    .sort(() => Math.random() - 0.5)
+    .slice(0, count);
 
-  // Shuffle the array
-  for (let i = result.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    const temp = result[i];
-    result[i] = result[j];
-    result[j] = temp;
-  }
-
-  return result;
+  return [randomStatements, null];
 }
 
 export const examRepository = {
-  getDrillSingle,
-  getDrillMany,
-  getCorrectIncorrect,
+  getSingleSection,
+  getAllSections,
+  getSingleStatement,
+  getAllStatements,
+  getRandomStatements,
 };
 
 export default examRepository;

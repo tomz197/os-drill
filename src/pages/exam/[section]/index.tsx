@@ -1,50 +1,69 @@
-import ExamQuestionForm from "@/components/exam-question-form";
-import { CorrectIncorrect, examRepository } from "@/lib/exam-repository";
-import { useCallback, useEffect, useState } from "react";
+import { Section, Statement } from "@/lib/common/types";
+import examRepository from "@/lib/exam-repository";
+import { useEffect, useState, useCallback } from "react";
 import { redirect, useParams } from "react-router-dom";
+import { StatementsForm } from "@/components/common/statements-form";
 
-function ExamPart() {
-  const { section } = useParams();
+export function ExamPage() {
+  const { sectionUUID } = useParams();
 
-  const [question, setQuestion] = useState<CorrectIncorrect | null>(null);
+  const [section, setSection] = useState<Section | null>(null);
+  const [trueStatements, setTrueStatements] = useState<Statement[]>([]);
+  const [falseStatements, setFalseStatements] = useState<Statement[]>([]);
 
-  const resetQuestion = useCallback(() => {
-    if (!section) {
+  useEffect(() => {
+    if (!sectionUUID) {
+      console.error("Section not found");
+      redirect("/");
+      return;
+    }
+    const [foundSection, error] = examRepository.getSingleSection({
+      uuid: sectionUUID,
+    });
+
+    if (error) {
+      console.error("Section not found");
+      redirect("/");
+      return;
+    }
+
+    setSection(foundSection);
+  }, [sectionUUID]);
+
+  const resetStatements = useCallback(() => {
+    if (!sectionUUID) {
       console.error("Section or name not found");
       redirect("/");
       return;
     }
 
-    const drill = examRepository.getDrillSingle({ section: parseInt(section) });
-    if (!drill) {
-      console.error("Drill not found");
+    const [statements, error] = examRepository.getRandomStatements({
+      count: 5,
+      sections: [sectionUUID],
+    });
+
+    if (error) {
+      console.error("Statements not found");
       redirect("/");
       return;
     }
 
-    setQuestion(examRepository.getCorrectIncorrect(drill));
+    setTrueStatements(statements.slice(0, 2));
+    setFalseStatements(statements.slice(2, 5));
   }, [section]);
 
   useEffect(() => {
-    resetQuestion();
-  }, [resetQuestion]);
+    resetStatements();
+  }, [resetStatements]);
 
-  if (!question) return null;
+  if (!trueStatements || !falseStatements || !section) return null;
 
   return (
-    <>
-      <h2 className="text-xl">
-        Část: {section}:{" "}
-        {!section
-          ? ""
-          : examRepository.getDrillSingle({ section: parseInt(section) })
-              ?.name ?? ""}
-      </h2>
-      <div>
-        <ExamQuestionForm facts={question} resetQuestion={resetQuestion} />
-      </div>
-    </>
+    <StatementsForm
+      title={section?.title}
+      correct={trueStatements}
+      incorrect={falseStatements}
+      refresh={resetStatements}
+    />
   );
 }
-
-export default ExamPart;

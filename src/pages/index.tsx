@@ -1,9 +1,9 @@
-import drillData from "@/lib/exam-repository/data";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Link as LinkIcon } from "lucide-react";
 
 import { creditData } from "@/lib/credit-repository/data";
+import { examData } from "@/lib/exam-repository/data";
 
 function LandingPage() {
   return (
@@ -43,10 +43,10 @@ function LandingPage() {
           <Link to="/exam">
             <Button className="w-full">Všechny části</Button>
           </Link>
-          {drillData.map((drill, i) => (
-            <Link key={i} to={`/exam/${drill.section}`}>
+          {examData.map((drill, i) => (
+            <Link key={i} to={`/exam/${drill.uuid}`}>
               <Button key={i} variant="outline" className="w-full">
-                Část {drill.section}: {drill.name}
+                {drill.title}
               </Button>
             </Link>
           ))}
