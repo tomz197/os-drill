@@ -3,7 +3,8 @@ import { ExamData } from "./types";
 export const examData: ExamData = [
   {
     uuid: "4a3f319b-472d-4c93-8652-c96701b39b32",
-    title: "Část 1: Virtualizate paměti",
+    sectionNumber: "1",
+    sectionTitle: "Virtualizace paměti",
     statements: [
       {
         uuid: "b3ffb5ea-e305-40f8-8543-f7af2e230990",
@@ -142,7 +143,8 @@ export const examData: ExamData = [
   },
   {
     uuid: "b10b91c1-603f-4b7a-b0af-dc38ffdc198d",
-    title: "Část 2: Virtualizate procesoru",
+    sectionNumber: "2",
+    sectionTitle: "Virtualizace procesoru",
     statements: [
       {
         uuid: "264eddb9-905b-45b7-a88b-053ffde2a858",
@@ -316,7 +318,8 @@ export const examData: ExamData = [
   },
   {
     uuid: "bb007866-d6bd-417d-9646-a312826bca5d",
-    title: "Část 3: Souborové systémy",
+    sectionNumber: "3",
+    sectionTitle: "Souborové systémy",
     statements: [
       {
         uuid: "4586a34d-edac-49a2-a467-4b0003ad8eb8",
@@ -546,7 +549,8 @@ export const examData: ExamData = [
   },
   {
     uuid: "33155a93-c51e-49a2-9edc-36100f100cf7",
-    title: "Část 4: Virtualizate periférií",
+    sectionNumber: "4",
+    sectionTitle: "Virtualizace periférií",
     statements: [
       {
         uuid: "0e86da29-65b6-4d7e-bdbd-e38f172fee74",
@@ -643,7 +647,8 @@ export const examData: ExamData = [
   },
   {
     uuid: "45309117-9cde-4069-8add-2f2060b1f984",
-    title: "Část 5: Souběžnost a synchronizace",
+    sectionNumber: "5",
+    sectionTitle: "Souběžnost a synchronizace",
     statements: [
       {
         uuid: "d352a06b-9766-449d-b1b4-38a1d983b019",
@@ -740,7 +745,8 @@ export const examData: ExamData = [
   },
   {
     uuid: "05038f02-9d9b-4922-a291-26653c34b40b",
-    title: "Část 6: Synchronizace",
+    sectionNumber: "6",
+    sectionTitle: "Synchronizace",
     statements: [
       {
         uuid: "0812706c-3e3f-4de4-83d9-c3cd37cf4f24",
@@ -830,7 +836,8 @@ export const examData: ExamData = [
   },
   {
     uuid: "837eff1d-7f14-47b8-866e-e8759fa5804b",
-    title: "Část 7: Komunikace, uváznutí",
+    sectionNumber: "7",
+    sectionTitle: "Komunikace, uváznutí",
     statements: [
       {
         uuid: "8fb057e1-a892-4c79-bed7-a2184ab89039",
@@ -983,7 +990,8 @@ export const examData: ExamData = [
   },
   {
     uuid: "be6acf2f-f519-492f-960d-17723f0fa0c6",
-    title: "Část 8: Přerušení a periferie",
+    sectionNumber: "8",
+    sectionTitle: "Přerušení a periferie",
     statements: [
       {
         uuid: "90f6b117-8002-48c4-8fe8-2737e9763bb6",

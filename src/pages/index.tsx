@@ -27,10 +27,10 @@ function LandingPage() {
           <Link to="/credit">
             <Button className="w-full">Všechny části</Button>
           </Link>
-          {creditData.map((drill, i) => (
-            <Link key={i} to={`/credit/${drill.uuid}`}>
+          {creditData.map((drill, i) =>  (
+            <Link key={i} to={`/credit/${drill.uuid}`} >
               <Button key={i} variant="outline" className="w-full">
-                {drill.title}
+                Část {drill.sectionNumber}: {drill.sectionTitle}
               </Button>
             </Link>
           ))}
@@ -46,7 +46,7 @@ function LandingPage() {
           {examData.map((drill, i) => (
             <Link key={i} to={`/exam/${drill.uuid}`}>
               <Button key={i} variant="outline" className="w-full">
-                {drill.title}
+                Část {drill.sectionNumber}: {drill.sectionTitle}
               </Button>
             </Link>
           ))}

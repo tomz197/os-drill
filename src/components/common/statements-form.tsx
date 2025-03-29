@@ -140,6 +140,11 @@ function StatementCheckbox({
             </p>
           </div>
         )}
+        {submited && statement.sectionNumber && statement.sectionTitle && (
+          <p className="text-gray-600">
+            Fakt z části: {statement.sectionNumber}. {statement.sectionTitle}
+          </p>
+        )}
       </div>
 
       {submited &&

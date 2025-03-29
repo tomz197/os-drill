@@ -60,7 +60,7 @@ export function CreditPage() {
 
   return (
     <StatementsForm
-      title={section?.title}
+      title={`Část ${section.sectionNumber}: ${section.sectionTitle}`}
       correct={trueStatements}
       incorrect={falseStatements}
       refresh={resetStatements}
