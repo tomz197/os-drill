@@ -11,6 +11,8 @@ import { CreditAllPage } from "./pages/credit";
 import { AboutPage } from "./pages/about";
 import { ExamPage } from "./pages/exam/[section]";
 import { ExamAllPage } from "./pages/exam";
+import { CreditCustomPage } from "./pages/credit-custom";
+import { ExamCustomPage } from "./pages/exam-custom";
 
 const router = createHashRouter(
   [
@@ -35,12 +37,20 @@ const router = createHashRouter(
           element: <ExamAllPage />,
         },
         {
+          path: "exam-custom",
+          element: <ExamCustomPage />,
+        },
+        {
           path: "credit/:sectionUUID",
           element: <CreditPage />,
         },
         {
           path: "credit",
           element: <CreditAllPage />,
+        },
+        {
+          path: "credit-custom",
+          element: <CreditCustomPage />,
         },
       ],
     },
