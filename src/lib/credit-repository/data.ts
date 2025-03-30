@@ -3,8 +3,8 @@ import { CreditData } from "./types";
 export const creditData: CreditData = [
   {
     "uuid": "95bb68e1-4510-4a5e-9c7f-ae982661c1f8",
-    "sectionNumber": "0",
-    "sectionTitle": "B. Z\u00e1kladn\u00ed pojmy a definice",
+    "sectionNumber": "B",
+    "sectionTitle": "Z\u00e1kladn\u00ed pojmy a definice",
     "statements": [
       {
         "uuid": "956b03dc-986f-4604-87e2-0e987af3b4ca",
