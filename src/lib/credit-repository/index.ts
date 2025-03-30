@@ -1,5 +1,6 @@
 import { Result, Section, Statement } from "../common/types";
-import { creditData } from "./data";
+
+const { creditData } = await import("./data");
 
 function getSingleSection({ uuid }: { uuid: string }): Result<Section> {
   const foundSection = creditData.find((section) => section.uuid === uuid);

@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Link as LinkIcon } from "lucide-react";
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
@@ -13,9 +13,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { creditData } from "@/lib/credit-repository/data";
-import { examData } from "@/lib/exam-repository/data";
 import { Section } from "@/lib/common/types";
+
+const { creditData } = await import("@/lib/credit-repository/data");
+const { examData } = await import("@/lib/exam-repository/data");
 
 function LandingPage() {
   const navigate = useNavigate();
@@ -72,13 +73,15 @@ function LandingPage() {
               sections={creditData}
             />
           </div>
-          {creditData.map((drill, i) =>  (
-            <Link key={i} to={`/credit/${drill.uuid}`} >
-              <Button key={i} variant="outline" className="w-full">
-                Část {drill.sectionNumber}: {drill.sectionTitle}
-              </Button>
-            </Link>
-          ))}
+          <Suspense fallback={<div>Loading...</div>}>
+            {creditData.map((drill, i) =>  (
+              <Link key={i} to={`/credit/${drill.uuid}`} >
+                <Button key={i} variant="outline" className="w-full">
+                  Část {drill.sectionNumber}: {drill.sectionTitle}
+                </Button>
+              </Link>
+            ))}
+          </Suspense>
         </div>
 
         <div className="h-[0.1rem] md:h-full w-full md:w-[0.1rem] bg-border rounded-full"></div>
@@ -97,13 +100,15 @@ function LandingPage() {
               sections={examData}
             />
           </div>
-          {examData.map((drill, i) => (
-            <Link key={i} to={`/exam/${drill.uuid}`}>
-              <Button key={i} variant="outline" className="w-full">
-                Část {drill.sectionNumber}: {drill.sectionTitle}
-              </Button>
-            </Link>
-          ))}
+          <Suspense fallback={<div>Loading...</div>}>
+            {examData.map((drill, i) => (
+              <Link key={i} to={`/exam/${drill.uuid}`}>
+                <Button key={i} variant="outline" className="w-full">
+                  Část {drill.sectionNumber}: {drill.sectionTitle}
+                </Button>
+              </Link>
+            ))}
+          </Suspense>
         </div>
       </div>
     </>

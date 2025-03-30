@@ -23,6 +23,9 @@ export default defineConfig(({ mode }) => {
         "@": path.resolve(__dirname, "./src"),
       },
     },
+    build: {
+      target: "esnext",
+    },
     preview: {
       port: parseInt(env.VITE_PORT),
       strictPort: true,
