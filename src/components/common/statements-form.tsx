@@ -101,13 +101,13 @@ function StatementCheckbox({
     <div
       className={cn([
         "p-2 flex gap-2 items-center",
-        submited && (type == "correct" ? "bg-green-200" : "bg-red-200"),
+        submited && (type == "correct" ? "bg-green-200 dark:bg-green-900" : "bg-red-200 dark:bg-red-900"),
         submited ? "cursor-default" : "cursor-pointer",
         submited
           ? type == "correct"
-            ? "hover:bg-green-300"
-            : "hover:bg-red-300"
-          : "hover:bg-gray-200",
+            ? "hover:bg-green-300 dark:hover:bg-green-800"
+            : "hover:bg-red-300 dark:hover:bg-red-800"
+          : "hover:bg-gray-200 dark:hover:bg-gray-700",
       ])}
       onClick={() => {
         if (submited) return;
@@ -133,7 +133,7 @@ function StatementCheckbox({
             >
               {!showCorrect ? "zobrazit správnou" : "zobrazit nesprávnou"}
             </p>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-400">
               {!showCorrect
                 ? "(Zobrazuje se nesprávna odpověď)"
                 : "(Zobrazuje se správna odpověď)"}
@@ -141,7 +141,7 @@ function StatementCheckbox({
           </div>
         )}
         {submited && statement.sectionNumber && statement.sectionTitle && (
-          <p className="text-gray-600">
+          <p className="text-gray-600 dark:text-gray-400">
             Fakt z části: {statement.sectionNumber}. {statement.sectionTitle}
           </p>
         )}

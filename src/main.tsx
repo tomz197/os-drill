@@ -13,6 +13,7 @@ import { ExamPage } from "./pages/exam/[section]";
 import { ExamAllPage } from "./pages/exam";
 import { CreditCustomPage } from "./pages/credit-custom";
 import { ExamCustomPage } from "./pages/exam-custom";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const router = createHashRouter(
   [
@@ -60,6 +61,8 @@ const router = createHashRouter(
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider defaultTheme="light" storageKey="os-drill-theme">
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>,
 );

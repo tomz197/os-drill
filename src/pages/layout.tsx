@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Github } from "lucide-react";
 import Discord from "@/assets/discord-icon";
 import { Link, Outlet } from "react-router-dom";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function Root() {
   return (
@@ -16,6 +17,8 @@ function Root() {
           <Link to="/about">
             <Button variant="ghost">O nás</Button>
           </Link>
+          <div className="h-6 w-[0.1rem] bg-border rounded-full"></div>
+          <ThemeToggle />
           <div className="h-6 w-[0.1rem] bg-border rounded-full"></div>
           <a href="https://github.com/tomz197/os-drill" target="_blank">
             <Button variant="ghost" size="icon">
