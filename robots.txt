@@ -1,0 +1,9 @@
+# https://os.zifcak.dev robots.txt
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://os.zifcak.dev/sitemap.xml
+
+# Crawl-delay
+Crawl-delay: 1 
