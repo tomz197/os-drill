@@ -15,7 +15,7 @@ import {
 
 import { Section } from "@/lib/common/types";
 import BuyMeCoffee from "@/components/buy-me-coffee";
-import BuyMeCoffeeHide from "@/components/buy-me-coffee-hide";
+
 const { creditData } = await import("@/lib/credit-repository/data");
 const { examData } = await import("@/lib/exam-repository/data");
 
