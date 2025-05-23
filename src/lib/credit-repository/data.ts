@@ -162,8 +162,8 @@ export const creditData: CreditData = [
       },
       {
         "uuid": "c27c6d93-86fd-4596-b298-16876e925ccd",
-        "correct": "Pokud ud\u00e1lost A nep\u0159edch\u00e1z\u00ed ud\u00e1lost B a ud\u00e1lost B nep\u0159edch\u00e1z\u00ed ud\u00e1lost A, pak jsou ud\u00e1losti A a B soub\u011b\u017en\u00e9.",
-        "incorrect": "Pokud ud\u00e1lost A p\u0159edch\u00e1z\u00ed ud\u00e1lost B a ud\u00e1lost B p\u0159edch\u00e1z\u00ed ud\u00e1lost A, pak jsou ud\u00e1losti A a B soub\u011b\u017en\u00e9.",
+        "correct": "Pokud ud\u00e1lost A nep\u0159edch\u00e1z\u00ed ud\u00e1lost B nebo ud\u00e1lost B nep\u0159edch\u00e1z\u00ed ud\u00e1lost A, pak jsou ud\u00e1losti A a B soub\u011b\u017en\u00e9.",
+        "incorrect": "Pokud ud\u00e1lost A p\u0159edch\u00e1z\u00ed ud\u00e1lost B nebo ud\u00e1lost B p\u0159edch\u00e1z\u00ed ud\u00e1lost A, pak jsou ud\u00e1losti A a B soub\u011b\u017en\u00e9.",
         "sectionNumber": "0.3.1",
         "sectionTitle": "Ud\u00e1lost a p\u0159edch\u00e1zen\u00ed"
       },
