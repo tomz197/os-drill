@@ -46,7 +46,8 @@ function getRandomStatements({
     sections ? sections.includes(section.uuid) : true,
   );
 
-  const section = filteredSections[Math.floor(Math.random() * filteredSections.length)];
+  const section =
+    filteredSections[Math.floor(Math.random() * filteredSections.length)];
 
   if (section.statements.length < count) {
     return [null, new Error("Not enough statements")];

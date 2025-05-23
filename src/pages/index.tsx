@@ -14,7 +14,8 @@ import {
 } from "@/components/ui/dialog";
 
 import { Section } from "@/lib/common/types";
-
+import BuyMeCoffee from "@/components/buy-me-coffee";
+import BuyMeCoffeeHide from "@/components/buy-me-coffee-hide";
 const { creditData } = await import("@/lib/credit-repository/data");
 const { examData } = await import("@/lib/exam-repository/data");
 
@@ -25,27 +26,27 @@ function LandingPage() {
 
   const handleCreditSectionSubmit = (selectedSections: string[]) => {
     const queryParams = new URLSearchParams();
-    selectedSections.forEach(section => {
-      queryParams.append('sections', section);
+    selectedSections.forEach((section) => {
+      queryParams.append("sections", section);
     });
-    
+
     navigate(`/credit-custom?${queryParams.toString()}`);
     setIsCreditDialogOpen(false);
   };
 
   const handleExamSectionSubmit = (selectedSections: string[]) => {
     const queryParams = new URLSearchParams();
-    selectedSections.forEach(section => {
-      queryParams.append('sections', section);
+    selectedSections.forEach((section) => {
+      queryParams.append("sections", section);
     });
-    
+
     navigate(`/exam-custom?${queryParams.toString()}`);
     setIsExamDialogOpen(false);
   };
 
   return (
-    <>
-      <p className="font-light mb-4 text-sm ">
+    <div className="flex flex-col gap-4 flex-1">
+      <p className="font-light text-sm ">
         Tato aplikace slouží na procvičení znalostí z předmětu PB152.
         <br /> Akékoliv chyby, připomínky, nápady na vylepšení, nebo návrhy na
         nové otázky můžete nahlásit na{" "}
@@ -65,17 +66,19 @@ function LandingPage() {
             <Link to="/credit">
               <Button className="w-full">Všechny části</Button>
             </Link>
-          
-            <SectionsDialog 
-              isOpen={isCreditDialogOpen} 
-              onOpenChange={setIsCreditDialogOpen}
-              onSubmit={handleCreditSectionSubmit}
-              sections={creditData}
-            />
+
+            <Suspense fallback={<div>Loading...</div>}>
+              <SectionsDialog
+                isOpen={isCreditDialogOpen}
+                onOpenChange={setIsCreditDialogOpen}
+                onSubmit={handleCreditSectionSubmit}
+                sections={creditData}
+              />
+            </Suspense>
           </div>
           <Suspense fallback={<div>Loading...</div>}>
-            {creditData.map((drill, i) =>  (
-              <Link key={i} to={`/credit/${drill.uuid}`} >
+            {creditData.map((drill, i) => (
+              <Link key={i} to={`/credit/${drill.uuid}`}>
                 <Button key={i} variant="outline" className="w-full">
                   Část {drill.sectionNumber}: {drill.sectionTitle}
                 </Button>
@@ -92,13 +95,15 @@ function LandingPage() {
             <Link to="/exam">
               <Button className="w-full">Všechny části</Button>
             </Link>
-            
-            <SectionsDialog 
-              isOpen={isExamDialogOpen} 
-              onOpenChange={setIsExamDialogOpen}
-              onSubmit={handleExamSectionSubmit}
-              sections={examData}
-            />
+
+            <Suspense fallback={<div>Loading...</div>}>
+              <SectionsDialog
+                isOpen={isExamDialogOpen}
+                onOpenChange={setIsExamDialogOpen}
+                onSubmit={handleExamSectionSubmit}
+                sections={examData}
+              />
+            </Suspense>
           </div>
           <Suspense fallback={<div>Loading...</div>}>
             {examData.map((drill, i) => (
@@ -111,19 +116,22 @@ function LandingPage() {
           </Suspense>
         </div>
       </div>
-    </>
+      <div className="flex justify-center items-center my-6 flex-1">
+        <BuyMeCoffee />
+      </div>
+    </div>
   );
 }
 
 export default LandingPage;
 
-function SectionsDialog({ 
-  isOpen, 
+function SectionsDialog({
+  isOpen,
   onOpenChange,
   onSubmit,
   sections,
-}: { 
-  isOpen: boolean; 
+}: {
+  isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   onSubmit: (selectedSections: string[]) => void;
   sections: Section[];
@@ -131,10 +139,10 @@ function SectionsDialog({
   const [selectedSections, setSelectedSections] = useState<string[]>([]);
 
   const handleSectionToggle = (sectionUUID: string) => {
-    setSelectedSections(prev => 
+    setSelectedSections((prev) =>
       prev.includes(sectionUUID)
-        ? prev.filter(id => id !== sectionUUID)
-        : [...prev, sectionUUID]
+        ? prev.filter((id) => id !== sectionUUID)
+        : [...prev, sectionUUID],
     );
   };
 
@@ -142,7 +150,7 @@ function SectionsDialog({
     if (selectedSections.length === 0) {
       return;
     }
-    
+
     onSubmit(selectedSections);
     setSelectedSections([]);
   };
@@ -161,7 +169,10 @@ function SectionsDialog({
         </DialogHeader>
         <div className="max-h-[60vh] overflow-y-auto py-2">
           {sections.map((section) => (
-            <div key={section.uuid} className="flex items-center space-x-2 mb-2">
+            <div
+              key={section.uuid}
+              className="flex items-center space-x-2 mb-2"
+            >
               <Checkbox
                 id={section.uuid}
                 checked={selectedSections.includes(section.uuid)}

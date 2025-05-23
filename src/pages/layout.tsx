@@ -28,7 +28,7 @@ function Root() {
         </div>
       </header>
       <div className="h-[0.1rem] w-full bg-border rounded-full"></div>
-      <main className="p-4 f slex flex-1 flex-col gap-2">
+      <main className="p-4 flex flex-col flex-1 gap-2">
         <Outlet />
       </main>
       <div className="h-[0.1rem] w-full bg-border rounded-full"></div>

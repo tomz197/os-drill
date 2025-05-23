@@ -10,28 +10,32 @@ export function ExamCustomPage() {
   const [trueStatements, setTrueStatements] = useState<Statement[]>([]);
   const [falseStatements, setFalseStatements] = useState<Statement[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
-  const [selectedSectionUUIDs, setSelectedSectionUUIDs] = useState<string[]>([]);
+  const [selectedSectionUUIDs, setSelectedSectionUUIDs] = useState<string[]>(
+    [],
+  );
 
   useEffect(() => {
     // Get sections from URL params
-    const sectionParams = searchParams.getAll('sections');
-    
+    const sectionParams = searchParams.getAll("sections");
+
     if (!sectionParams || sectionParams.length === 0) {
       console.error("No sections selected");
-      navigate('/');
+      navigate("/");
       return;
     }
-    
+
     setSelectedSectionUUIDs(sectionParams);
-    
+
     // Load section names for display
     const [allSections, error] = examRepository.getAllSections();
     if (error) {
       console.error("Failed to load sections");
       return;
     }
-    
-    setSections(allSections.filter(section => sectionParams.includes(section.uuid)));
+
+    setSections(
+      allSections.filter((section) => sectionParams.includes(section.uuid)),
+    );
   }, [searchParams, navigate]);
 
   const resetStatements = useCallback(() => {
@@ -59,11 +63,17 @@ export function ExamCustomPage() {
     }
   }, [selectedSectionUUIDs, resetStatements]);
 
-  if (selectedSectionUUIDs.length === 0 || !trueStatements.length || !falseStatements.length) {
+  if (
+    selectedSectionUUIDs.length === 0 ||
+    !trueStatements.length ||
+    !falseStatements.length
+  ) {
     return <div className="p-8 text-center">Načítání...</div>;
   }
 
-  const sectionTitles = sections.map(s => `${s.sectionNumber}: ${s.sectionTitle}`).join(", ");
+  const sectionTitles = sections
+    .map((s) => `${s.sectionNumber}: ${s.sectionTitle}`)
+    .join(", ");
 
   return (
     <StatementsForm
@@ -73,4 +83,4 @@ export function ExamCustomPage() {
       refresh={resetStatements}
     />
   );
-} 
+}

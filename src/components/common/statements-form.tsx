@@ -12,6 +12,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import BuyMeCoffeeHide from "../buy-me-coffee-hide";
 
 export function StatementsForm({
   title,
@@ -35,7 +36,7 @@ export function StatementsForm({
   }, [correct, incorrect]);
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 flex-1">
       <div>
         <h2 className="text-2xl">{title}</h2>
         <p className="font-medium text-sm">
@@ -78,6 +79,10 @@ export function StatementsForm({
       <div className="w-full flex justify-end">
         <ReportIssue />
       </div>
+
+      <div className="flex justify-center items-center my-6 flex-1">
+        <BuyMeCoffeeHide />
+      </div>
     </div>
   );
 }
@@ -101,7 +106,10 @@ function StatementCheckbox({
     <div
       className={cn([
         "p-2 flex gap-2 items-center",
-        submited && (type == "correct" ? "bg-green-200 dark:bg-green-900" : "bg-red-200 dark:bg-red-900"),
+        submited &&
+          (type == "correct"
+            ? "bg-green-200 dark:bg-green-900"
+            : "bg-red-200 dark:bg-red-900"),
         submited ? "cursor-default" : "cursor-pointer",
         submited
           ? type == "correct"
