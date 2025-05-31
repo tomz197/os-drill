@@ -14,3 +14,16 @@ export type Section = {
 };
 
 export type Result<T> = [T, null] | [null, Error];
+
+export type SectionStats = {
+  sectionId: string; // UUID of the section
+  totalAttempts: number; // Total number of attempts
+  correctAttempts: number; // Number of correct attempts
+  rightStatements: number; // Number of statements with correct last attempt
+  wrongStatements: number; // Number of statements with incorrect last attempt
+  totalStatements: number; // Total number of statements
+};
+
+export type SectionStatsMap = {
+  [sectionId: string]: SectionStats;
+};

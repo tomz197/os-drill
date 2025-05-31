@@ -37,7 +37,7 @@ export function ExamPage() {
       return;
     }
 
-    const [statements, error] = examRepository.getRandomStatements({
+    const [res, error] = examRepository.getRandomStatements({
       count: 5,
       sections: [sectionUUID],
     });
@@ -48,9 +48,9 @@ export function ExamPage() {
       return;
     }
 
-    setTrueStatements(statements.slice(0, 2));
-    setFalseStatements(statements.slice(2, 5));
-  }, [section]);
+    setTrueStatements(res.statements.slice(0, 2));
+    setFalseStatements(res.statements.slice(2, 5));
+  }, [sectionUUID]);
 
   useEffect(() => {
     resetStatements();
@@ -61,6 +61,7 @@ export function ExamPage() {
   return (
     <StatementsForm
       title={`Část ${section.sectionNumber}: ${section.sectionTitle}`}
+      sectionId={sectionUUID!}
       correct={trueStatements}
       incorrect={falseStatements}
       refresh={resetStatements}

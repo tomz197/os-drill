@@ -13,6 +13,7 @@ export function CreditCustomPage() {
   const [selectedSectionUUIDs, setSelectedSectionUUIDs] = useState<string[]>(
     [],
   );
+  const [currentSection, setCurrentSection] = useState<Section | null>(null);
 
   useEffect(() => {
     // Get sections from URL params
@@ -43,7 +44,7 @@ export function CreditCustomPage() {
       return;
     }
 
-    const [statements, error] = creditRepository.getRandomStatements({
+    const [res, error] = creditRepository.getRandomStatements({
       count: 5,
       sections: selectedSectionUUIDs,
     });
@@ -53,8 +54,9 @@ export function CreditCustomPage() {
       return;
     }
 
-    setTrueStatements(statements.slice(0, 2));
-    setFalseStatements(statements.slice(2, 5));
+    setTrueStatements(res.statements.slice(0, 2));
+    setFalseStatements(res.statements.slice(2, 5));
+    setCurrentSection(res.section);
   }, [selectedSectionUUIDs]);
 
   useEffect(() => {
@@ -66,7 +68,8 @@ export function CreditCustomPage() {
   if (
     selectedSectionUUIDs.length === 0 ||
     !trueStatements.length ||
-    !falseStatements.length
+    !falseStatements.length ||
+    !currentSection
   ) {
     return <div className="p-8 text-center">Načítání...</div>;
   }
@@ -78,6 +81,7 @@ export function CreditCustomPage() {
   return (
     <StatementsForm
       title={`Vlastní výběr: ${sectionTitles}`}
+      sectionId={currentSection.uuid}
       correct={trueStatements}
       incorrect={falseStatements}
       refresh={resetStatements}

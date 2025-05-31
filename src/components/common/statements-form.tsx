@@ -13,14 +13,19 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import BuyMeCoffeeHide from "../buy-me-coffee-hide";
+import { StorageController } from "@/lib/controllers/storage-controller";
+
+const storageController = StorageController.getInstance();
 
 export function StatementsForm({
   title,
+  sectionId,
   correct,
   incorrect,
   refresh,
 }: {
   title: string;
+  sectionId: string;
   correct: Statement[];
   incorrect: Statement[];
   refresh: () => void;
@@ -34,6 +39,21 @@ export function StatementsForm({
     setChecked(new Array(correct.length + incorrect.length).fill(false));
     return shuffle([...correct, ...incorrect]);
   }, [correct, incorrect]);
+
+  const handleSubmit = () => {
+    if (submited) {
+      setSubmited(false);
+      refresh();
+      return;
+    }
+
+    setSubmited(true);
+    for (let i = 0; i < checked.length; i++) {
+      if (checked[i]) {
+        storageController.recordAttempt(sectionId, shuffledStatements[i].uuid, correct.find((s) => s.uuid == shuffledStatements[i].uuid) ? true : false);
+      }
+    }
+  };
 
   return (
     <div className="flex flex-col gap-4 flex-1">
@@ -65,14 +85,7 @@ export function StatementsForm({
       </div>
       <Button
         className="w-full"
-        onClick={() => {
-          if (submited) {
-            setSubmited(false);
-            refresh();
-          } else {
-            setSubmited(true);
-          }
-        }}
+        onClick={handleSubmit}
       >
         {submited ? "Další otázka" : "Odeslat"}
       </Button>

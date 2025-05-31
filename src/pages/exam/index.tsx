@@ -1,4 +1,4 @@
-import { Statement } from "@/lib/common/types";
+import { Section, Statement } from "@/lib/common/types";
 import examRepository from "@/lib/exam-repository";
 import { useEffect, useState, useCallback } from "react";
 import { redirect } from "react-router-dom";
@@ -7,9 +7,10 @@ import { StatementsForm } from "@/components/common/statements-form";
 export function ExamAllPage() {
   const [trueStatements, setTrueStatements] = useState<Statement[]>([]);
   const [falseStatements, setFalseStatements] = useState<Statement[]>([]);
+  const [currentSection, setCurrentSection] = useState<Section | null>(null);
 
   const resetStatements = useCallback(() => {
-    const [statements, error] = examRepository.getRandomStatements({
+    const [res, error] = examRepository.getRandomStatements({
       count: 5,
     });
 
@@ -19,19 +20,21 @@ export function ExamAllPage() {
       return;
     }
 
-    setTrueStatements(statements.slice(0, 2));
-    setFalseStatements(statements.slice(2, 5));
+    setTrueStatements(res.statements.slice(0, 2));
+    setFalseStatements(res.statements.slice(2, 5));
+    setCurrentSection(res.section);
   }, []);
 
   useEffect(() => {
     resetStatements();
   }, [resetStatements]);
 
-  if (!trueStatements || !falseStatements) return null;
+  if (!trueStatements || !falseStatements || !currentSection) return null;
 
   return (
     <StatementsForm
       title={"Všechny části"}
+      sectionId={currentSection.uuid}
       correct={trueStatements}
       incorrect={falseStatements}
       refresh={resetStatements}

@@ -1,4 +1,6 @@
-import { Result, Section, Statement } from "../common/types";
+import { Result, Section, SectionStatsMap, Statement } from "../common/types";
+import { StorageController } from "../controllers/storage-controller";
+import { getPrioritizedStatements } from "../utils";
 
 const { creditData } = await import("./data");
 
@@ -41,7 +43,10 @@ function getRandomStatements({
 }: {
   count?: number;
   sections?: string[]; // if omitted, all sections are used
-}): Result<Statement[]> {
+}): Result<{
+  statements: Statement[];
+  section: Section;
+}> {
   const filteredSections = creditData.filter((section) =>
     sections ? sections.includes(section.uuid) : true,
   );
@@ -53,19 +58,47 @@ function getRandomStatements({
     return [null, new Error("Not enough statements")];
   }
 
-  const randomStatements = section.statements
-    .sort(() => Math.random() - 0.5)
-    .slice(0, count);
+  const storageController = StorageController.getInstance();
+  const [sectionStats, _] = storageController.getStats(section.uuid);
 
-  return [randomStatements, null];
+  const randomStatements = getPrioritizedStatements(section, sectionStats, count);
+
+  return [
+    {
+      statements: randomStatements,
+      section,
+    },
+    null,
+  ];
 }
 
+function getStats(): Result<SectionStatsMap> {
+  const storageController = StorageController.getInstance();
+
+  const sectionStatsMap: SectionStatsMap = {};
+
+  for (const section of creditData) {
+    const [sectionStats, _] = storageController.getStats(section.uuid);
+
+    sectionStatsMap[section.uuid] = {
+      sectionId: section.uuid,
+      totalAttempts: sectionStats?.totalAttempts || 0,
+      correctAttempts: sectionStats?.correctAttempts || 0,
+      rightStatements: sectionStats?.rightStatements || 0,
+      wrongStatements: sectionStats?.wrongStatements || 0,
+      totalStatements: section.statements.length,
+    };
+  }
+
+  return [sectionStatsMap, null];
+}
 export const creditRepository = {
   getSingleSection,
   getAllSections,
   getSingleStatement,
   getAllStatements,
   getRandomStatements,
+  getStats,
 };
 
 export default creditRepository;

@@ -1,7 +1,7 @@
+import { Suspense, useMemo, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Link as LinkIcon } from "lucide-react";
-import { Suspense, useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Dialog,
@@ -15,6 +15,8 @@ import {
 
 import { Section } from "@/lib/common/types";
 import BuyMeCoffee from "@/components/buy-me-coffee";
+import creditRepository from "@/lib/credit-repository";
+import examRepository from "@/lib/exam-repository";
 
 const { creditData } = await import("@/lib/credit-repository/data");
 const { examData } = await import("@/lib/exam-repository/data");
@@ -23,6 +25,23 @@ function LandingPage() {
   const navigate = useNavigate();
   const [isCreditDialogOpen, setIsCreditDialogOpen] = useState(false);
   const [isExamDialogOpen, setIsExamDialogOpen] = useState(false);
+
+  const creditStats = useMemo(() => {
+    const [stats, error] = creditRepository.getStats();
+    if (error) {
+      console.error(error);
+      return null;
+    }
+    return stats;
+  }, []);
+  const examStats = useMemo(() => {
+    const [stats, error] = examRepository.getStats();
+    if (error) {
+      console.error(error);
+      return null;
+    }
+    return stats;
+  }, []);
 
   const handleCreditSectionSubmit = (selectedSections: string[]) => {
     const queryParams = new URLSearchParams();
@@ -61,7 +80,12 @@ function LandingPage() {
       </p>
       <div className="grid grid-cols-1 md:grid-cols-[1fr_auto_1fr] gap-4">
         <div className="flex flex-col gap-1">
-          <h2 className="text-xl">Zápočet</h2>
+          <h2 className="text-xl flex justify-between items-end">
+            Zápočet{" "}
+            <span className="text-muted-foreground text-sm">
+              (správné / špatné / celkový počet)
+            </span>
+          </h2>
           <div className="grid grid-cols-2 gap-1">
             <Link to="/credit">
               <Button className="w-full">Všechny části</Button>
@@ -80,7 +104,18 @@ function LandingPage() {
             {creditData.map((drill, i) => (
               <Link key={i} to={`/credit/${drill.uuid}`}>
                 <Button key={i} variant="outline" className="w-full">
-                  Část {drill.sectionNumber}: {drill.sectionTitle}
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-left truncate mr-2">
+                      Část {drill.sectionNumber}: {drill.sectionTitle}
+                    </span>
+                    <span className="text-right text-muted-foreground shrink-0">
+                      <span className="text-green-600">{((creditStats?.[drill.uuid]?.rightStatements || 0) / drill.statements.length * 100).toFixed(0)}%</span>
+                      {" / "}
+                      <span className="text-red-600">{((creditStats?.[drill.uuid]?.wrongStatements || 0) / drill.statements.length * 100).toFixed(0)}%</span>
+                      {" / "}
+                      <span className="text-gray-600">{drill.statements.length}</span>
+                    </span>
+                  </div>
                 </Button>
               </Link>
             ))}
@@ -90,7 +125,12 @@ function LandingPage() {
         <div className="h-[0.1rem] md:h-full w-full md:w-[0.1rem] bg-border rounded-full"></div>
 
         <div className="flex flex-col gap-1">
-          <h2 className="text-xl">Zkouška</h2>
+          <h2 className="text-xl flex justify-between items-end">
+            Zkouška{" "}
+            <span className="text-muted-foreground text-sm">
+              (správné / špatné / celkový počet)
+            </span>
+          </h2>
           <div className="grid grid-cols-2 gap-1">
             <Link to="/exam">
               <Button className="w-full">Všechny části</Button>
@@ -109,7 +149,18 @@ function LandingPage() {
             {examData.map((drill, i) => (
               <Link key={i} to={`/exam/${drill.uuid}`}>
                 <Button key={i} variant="outline" className="w-full">
-                  Část {drill.sectionNumber}: {drill.sectionTitle}
+                  <div className="flex justify-between items-center w-full">
+                    <span className="text-left">
+                      Část {drill.sectionNumber}: {drill.sectionTitle}
+                    </span>
+                    <span className="text-right text-muted-foreground">
+                      <span className="text-green-600">{((examStats?.[drill.uuid]?.rightStatements || 0) / drill.statements.length * 100).toFixed(0)}%</span>
+                      {" / "}
+                      <span className="text-red-600">{((examStats?.[drill.uuid]?.wrongStatements || 0) / drill.statements.length * 100).toFixed(0)}%</span>
+                      {" / "}
+                      <span className="text-gray-600">{drill.statements.length}</span>
+                    </span>
+                  </div>
                 </Button>
               </Link>
             ))}

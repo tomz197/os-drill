@@ -10,9 +10,8 @@ export function ExamCustomPage() {
   const [trueStatements, setTrueStatements] = useState<Statement[]>([]);
   const [falseStatements, setFalseStatements] = useState<Statement[]>([]);
   const [sections, setSections] = useState<Section[]>([]);
-  const [selectedSectionUUIDs, setSelectedSectionUUIDs] = useState<string[]>(
-    [],
-  );
+  const [selectedSectionUUIDs, setSelectedSectionUUIDs] = useState<string[]>([]);
+  const [currentSection, setCurrentSection] = useState<Section | null>(null);
 
   useEffect(() => {
     // Get sections from URL params
@@ -43,7 +42,7 @@ export function ExamCustomPage() {
       return;
     }
 
-    const [statements, error] = examRepository.getRandomStatements({
+    const [res, error] = examRepository.getRandomStatements({
       count: 5,
       sections: selectedSectionUUIDs,
     });
@@ -53,8 +52,9 @@ export function ExamCustomPage() {
       return;
     }
 
-    setTrueStatements(statements.slice(0, 2));
-    setFalseStatements(statements.slice(2, 5));
+    setTrueStatements(res.statements.slice(0, 2));
+    setFalseStatements(res.statements.slice(2, 5));
+    setCurrentSection(res.section);
   }, [selectedSectionUUIDs]);
 
   useEffect(() => {
@@ -66,7 +66,8 @@ export function ExamCustomPage() {
   if (
     selectedSectionUUIDs.length === 0 ||
     !trueStatements.length ||
-    !falseStatements.length
+    !falseStatements.length ||
+    !currentSection
   ) {
     return <div className="p-8 text-center">Načítání...</div>;
   }
@@ -78,6 +79,7 @@ export function ExamCustomPage() {
   return (
     <StatementsForm
       title={`Vlastní výběr: ${sectionTitles}`}
+      sectionId={currentSection.uuid}
       correct={trueStatements}
       incorrect={falseStatements}
       refresh={resetStatements}
