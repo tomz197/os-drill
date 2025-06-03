@@ -170,4 +170,38 @@ export class StorageController {
       return [null, error instanceof Error ? error : new Error('Failed to clear stats')];
     }
   }
+
+  public setStats(stats: StoredSectionStatsMap): Result<void> {
+    try {
+      for (const [sectionId, sectionStats] of Object.entries(stats)) {
+        if (!sectionStats.sectionId || !sectionStats.statements) {
+          return [null, new Error('Invalid stats format: missing required fields')];
+        }
+        
+        for (const [statementId, statementStats] of Object.entries(sectionStats.statements)) {
+          if (!statementStats.statementId || 
+              typeof statementStats.totalAttempts !== 'number' ||
+              typeof statementStats.correctAttempts !== 'number' ||
+              typeof statementStats.lastAttempted !== 'string' ||
+              typeof statementStats.lastAttemptCorrect !== 'boolean') {
+            return [null, new Error('Invalid stats format: invalid statement stats')];
+          }
+        }
+      }
+
+      this.stats = stats;
+      this.saveStats();
+      return [undefined, null];
+    } catch (error) {
+      return [null, error instanceof Error ? error : new Error('Failed to set stats')];
+    }
+  }
+
+  public getCopyableStats(): Result<string> {
+    try {
+      return [JSON.stringify(this.stats, null, 2), null];
+    } catch (error) {
+      return [null, error instanceof Error ? error : new Error('Failed to get copyable stats')];
+    }
+  }
 } 

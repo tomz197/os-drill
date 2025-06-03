@@ -3,8 +3,46 @@ import { Github } from "lucide-react";
 import Discord from "@/assets/discord-icon";
 import { Link, Outlet } from "react-router-dom";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { StorageController } from "@/lib/controllers/storage-controller";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useState } from "react";
+import { Textarea } from "@/components/ui/textarea";
+import { ChangeEvent } from "react";
 
 function Root() {
+  const [statsText, setStatsText] = useState("");
+
+  const handleCopyStats = () => {
+    const [stats, error] = StorageController.getInstance().getCopyableStats();
+    if (error) {
+      alert("Failed to copy stats");
+      return;
+    }
+    navigator.clipboard.writeText(stats);
+    alert("Stats copied to clipboard");
+  };
+
+  const handlePasteStats = () => {
+    try {
+      const stats = JSON.parse(statsText);
+      const [_, error] = StorageController.getInstance().setStats(stats);
+      if (error) {
+        alert(error.message);
+        return;
+      }
+      alert("Stats imported successfully");
+      window.location.reload();
+    } catch (error) {
+      alert("Invalid stats format");
+    }
+  };
+
   return (
     <>
       <header className="px-4 py-1 flex justify-between items-center">
@@ -50,6 +88,44 @@ function Root() {
           Discord
           <Discord className="w-6 h-6 stroke-[1.5] inline" />
         </a>
+        <div className="h-6 w-[0.1rem] bg-border rounded-full"></div>
+        <Dialog>
+          <DialogTrigger asChild>
+            <button className="text-grey-400 hover:text-blue-500">
+              Stats
+            </button>
+          </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Stats Management</DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col gap-4 py-4">
+              <div className="text-sm text-muted-foreground">
+                <p className="mb-2">
+                  Your stats help us provide a better learning experience by tracking which statements you've seen and how well you know them.
+                </p>
+                <p className="mb-2">
+                  We use this information to:
+                </p>
+                <ul className="list-disc pl-4 space-y-1">
+                  <li>Prioritize statements you haven't seen yet</li>
+                  <li>Focus on statements you've struggled with</li>
+                  <li>Track your progress over time</li>
+                </ul>
+              </div>
+              <Button onClick={handleCopyStats}>Copy Stats</Button>
+              <div className="flex flex-col gap-2">
+                <Textarea
+                  placeholder="Paste stats here..."
+                  value={statsText}
+                  onChange={(e: ChangeEvent<HTMLTextAreaElement>) => setStatsText(e.target.value)}
+                  className="min-h-[200px]"
+                />
+                <Button onClick={handlePasteStats}>Import Stats</Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </footer>
     </>
   );
