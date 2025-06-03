@@ -25,6 +25,9 @@ export type StoredSectionStatsMap = {
 
 const STORAGE_KEY = 'os-drill-user-stats';
 
+const STORAGE_VERSION = '1'; // if incremented, the stats need to be recalculated
+const STORAGE_VERSION_KEY = 'os-drill-user-stats-version';
+
 export class StorageController {
   private static instance: StorageController;
   private stats: StoredSectionStatsMap = {};
@@ -46,6 +49,12 @@ export class StorageController {
       if (storedStats) {
         this.stats = JSON.parse(storedStats);
       }
+
+      const storedVersion = localStorage.getItem(STORAGE_VERSION_KEY);
+      if (storedVersion !== STORAGE_VERSION) {
+        this.recalculateAllSections();
+        localStorage.setItem(STORAGE_VERSION_KEY, STORAGE_VERSION);
+      }
     } catch (error) {
       console.error('Failed to load stats from storage:', error);
       this.stats = {};
@@ -60,9 +69,27 @@ export class StorageController {
     }
   }
 
+  private recalculateSectionStatementCounts(sectionId: string): void {
+    const section = this.stats[sectionId];
+    if (!section) return;
+
+    let rightCount = 0;
+    let wrongCount = 0;
+
+    for (const statement of Object.values(section.statements)) {
+      if (statement.lastAttemptCorrect) {
+        rightCount++;
+      } else {
+        wrongCount++;
+      }
+    }
+
+    section.rightStatements = rightCount;
+    section.wrongStatements = wrongCount;
+  }
+
   public recordAttempt(sectionId: string, statementId: string, isCorrect: boolean): Result<void> {
     try {
-      // Initialize section stats if not exists
       if (!this.stats[sectionId]) {
         this.stats[sectionId] = {
           sectionId,
@@ -76,7 +103,6 @@ export class StorageController {
         };
       }
 
-      // Initialize statement stats if not exists
       if (!this.stats[sectionId].statements[statementId]) {
         this.stats[sectionId].statements[statementId] = {
           statementId,
@@ -194,6 +220,18 @@ export class StorageController {
       return [undefined, null];
     } catch (error) {
       return [null, error instanceof Error ? error : new Error('Failed to set stats')];
+    }
+  }
+
+  public recalculateAllSections(): Result<void> {
+    try {
+      for (const sectionId of Object.keys(this.stats)) {
+        this.recalculateSectionStatementCounts(sectionId);
+      }
+      this.saveStats();
+      return [undefined, null];
+    } catch (error) {
+      return [null, error instanceof Error ? error : new Error('Failed to recalculate sections')];
     }
   }
 
