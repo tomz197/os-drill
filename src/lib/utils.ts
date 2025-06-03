@@ -86,6 +86,6 @@ export function getPrioritizedStatements(
     }
   }
 
-  return result;
+  return shuffle(result);
 }
 
