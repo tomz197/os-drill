@@ -57,9 +57,11 @@ export function getPrioritizedStatements(
     result.push(shuffledWrong[0]);
   }
 
+  /* uncomment this to enable prioritizing right statements
   if (shuffledRight.length > 0) {
-    result.push(shuffledRight[0]);
+    result.push(shuffledRight[0]); 
   }
+  */
 
   const remainingSlots = count - result.length;
 
