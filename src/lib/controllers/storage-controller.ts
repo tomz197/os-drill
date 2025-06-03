@@ -173,12 +173,12 @@ export class StorageController {
 
   public setStats(stats: StoredSectionStatsMap): Result<void> {
     try {
-      for (const [sectionId, sectionStats] of Object.entries(stats)) {
+      for (const [, sectionStats] of Object.entries(stats)) {
         if (!sectionStats.sectionId || !sectionStats.statements) {
           return [null, new Error('Invalid stats format: missing required fields')];
         }
         
-        for (const [statementId, statementStats] of Object.entries(sectionStats.statements)) {
+        for (const [, statementStats] of Object.entries(sectionStats.statements)) {
           if (!statementStats.statementId || 
               typeof statementStats.totalAttempts !== 'number' ||
               typeof statementStats.correctAttempts !== 'number' ||
