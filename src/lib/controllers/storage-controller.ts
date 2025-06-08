@@ -1,4 +1,4 @@
-import { Result } from '../common/types';
+import { Result } from "../common/types";
 
 export type StatementStats = {
   statementId: string; // UUID of the statement
@@ -23,10 +23,10 @@ export type StoredSectionStatsMap = {
   [sectionId: string]: StoredSectionStats;
 };
 
-const STORAGE_KEY = 'os-drill-user-stats';
+const STORAGE_KEY = "os-drill-user-stats";
 
-const STORAGE_VERSION = '1'; // if incremented, the stats need to be recalculated
-const STORAGE_VERSION_KEY = 'os-drill-user-stats-version';
+const STORAGE_VERSION = "2"; // if incremented, the stats need to be recalculated
+const STORAGE_VERSION_KEY = "os-drill-user-stats-version";
 
 export class StorageController {
   private static instance: StorageController;
@@ -56,7 +56,7 @@ export class StorageController {
         localStorage.setItem(STORAGE_VERSION_KEY, STORAGE_VERSION);
       }
     } catch (error) {
-      console.error('Failed to load stats from storage:', error);
+      console.error("Failed to load stats from storage:", error);
       this.stats = {};
     }
   }
@@ -65,7 +65,7 @@ export class StorageController {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(this.stats));
     } catch (error) {
-      console.error('Failed to save stats to storage:', error);
+      console.error("Failed to save stats to storage:", error);
     }
   }
 
@@ -88,7 +88,11 @@ export class StorageController {
     section.wrongStatements = wrongCount;
   }
 
-  public recordAttempt(sectionId: string, statementId: string, isCorrect: boolean): Result<void> {
+  public recordAttempt(
+    sectionId: string,
+    statementId: string,
+    isCorrect: boolean,
+  ): Result<void> {
     try {
       if (!this.stats[sectionId]) {
         this.stats[sectionId] = {
@@ -117,10 +121,16 @@ export class StorageController {
           this.stats[sectionId].wrongStatements++;
         }
       } else {
-        if (isCorrect && !this.stats[sectionId].statements[statementId].lastAttemptCorrect) {
+        if (
+          isCorrect &&
+          !this.stats[sectionId].statements[statementId].lastAttemptCorrect
+        ) {
           this.stats[sectionId].rightStatements++;
           this.stats[sectionId].wrongStatements--;
-        } else if (!isCorrect && this.stats[sectionId].statements[statementId].lastAttemptCorrect) {
+        } else if (
+          !isCorrect &&
+          this.stats[sectionId].statements[statementId].lastAttemptCorrect
+        ) {
           this.stats[sectionId].wrongStatements++;
           this.stats[sectionId].rightStatements--;
         }
@@ -139,13 +149,18 @@ export class StorageController {
       if (isCorrect) {
         this.stats[sectionId].statements[statementId].correctAttempts++;
       }
-      this.stats[sectionId].statements[statementId].lastAttempted = new Date().toISOString();
-      this.stats[sectionId].statements[statementId].lastAttemptCorrect = isCorrect;
+      this.stats[sectionId].statements[statementId].lastAttempted =
+        new Date().toISOString();
+      this.stats[sectionId].statements[statementId].lastAttemptCorrect =
+        isCorrect;
 
       this.saveStats();
       return [undefined, null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to record attempt')];
+      return [
+        null,
+        error instanceof Error ? error : new Error("Failed to record attempt"),
+      ];
     }
   }
 
@@ -153,29 +168,40 @@ export class StorageController {
     try {
       const stats = this.stats[sectionId];
       if (!stats) {
-        return [null, new Error('No stats found for section')];
+        return [null, new Error("No stats found for section")];
       }
       return [stats, null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to get stats')];
+      return [
+        null,
+        error instanceof Error ? error : new Error("Failed to get stats"),
+      ];
     }
   }
 
-  public getStatementStats(sectionId: string, statementId: string): Result<StatementStats> {
+  public getStatementStats(
+    sectionId: string,
+    statementId: string,
+  ): Result<StatementStats> {
     try {
       const sectionStats = this.stats[sectionId];
       if (!sectionStats) {
-        return [null, new Error('No stats found for section')];
+        return [null, new Error("No stats found for section")];
       }
 
       const statementStats = sectionStats.statements[statementId];
       if (!statementStats) {
-        return [null, new Error('No stats found for statement')];
+        return [null, new Error("No stats found for statement")];
       }
 
       return [statementStats, null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to get statement stats')];
+      return [
+        null,
+        error instanceof Error
+          ? error
+          : new Error("Failed to get statement stats"),
+      ];
     }
   }
 
@@ -183,7 +209,10 @@ export class StorageController {
     try {
       return [this.stats, null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to get all stats')];
+      return [
+        null,
+        error instanceof Error ? error : new Error("Failed to get all stats"),
+      ];
     }
   }
 
@@ -193,7 +222,10 @@ export class StorageController {
       this.saveStats();
       return [undefined, null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to clear stats')];
+      return [
+        null,
+        error instanceof Error ? error : new Error("Failed to clear stats"),
+      ];
     }
   }
 
@@ -201,16 +233,26 @@ export class StorageController {
     try {
       for (const [, sectionStats] of Object.entries(stats)) {
         if (!sectionStats.sectionId || !sectionStats.statements) {
-          return [null, new Error('Invalid stats format: missing required fields')];
+          return [
+            null,
+            new Error("Invalid stats format: missing required fields"),
+          ];
         }
-        
-        for (const [, statementStats] of Object.entries(sectionStats.statements)) {
-          if (!statementStats.statementId || 
-              typeof statementStats.totalAttempts !== 'number' ||
-              typeof statementStats.correctAttempts !== 'number' ||
-              typeof statementStats.lastAttempted !== 'string' ||
-              typeof statementStats.lastAttemptCorrect !== 'boolean') {
-            return [null, new Error('Invalid stats format: invalid statement stats')];
+
+        for (const [, statementStats] of Object.entries(
+          sectionStats.statements,
+        )) {
+          if (
+            !statementStats.statementId ||
+            typeof statementStats.totalAttempts !== "number" ||
+            typeof statementStats.correctAttempts !== "number" ||
+            typeof statementStats.lastAttempted !== "string" ||
+            typeof statementStats.lastAttemptCorrect !== "boolean"
+          ) {
+            return [
+              null,
+              new Error("Invalid stats format: invalid statement stats"),
+            ];
           }
         }
       }
@@ -219,7 +261,10 @@ export class StorageController {
       this.saveStats();
       return [undefined, null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to set stats')];
+      return [
+        null,
+        error instanceof Error ? error : new Error("Failed to set stats"),
+      ];
     }
   }
 
@@ -231,7 +276,12 @@ export class StorageController {
       this.saveStats();
       return [undefined, null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to recalculate sections')];
+      return [
+        null,
+        error instanceof Error
+          ? error
+          : new Error("Failed to recalculate sections"),
+      ];
     }
   }
 
@@ -239,7 +289,13 @@ export class StorageController {
     try {
       return [JSON.stringify(this.stats, null, 2), null];
     } catch (error) {
-      return [null, error instanceof Error ? error : new Error('Failed to get copyable stats')];
+      return [
+        null,
+        error instanceof Error
+          ? error
+          : new Error("Failed to get copyable stats"),
+      ];
     }
   }
-} 
+}
+
