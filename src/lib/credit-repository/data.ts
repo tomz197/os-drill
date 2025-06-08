@@ -399,20 +399,6 @@ export const creditData: CreditData = [
         "sectionTitle": "Adresní prostor"
       },
       {
-        "uuid": "54ff93f4-777b-42f6-afb5-a1afb45c568f",
-        "correct": "Adresa 0x010030 je platná adresa v uvedeném příkladu adresního prostoru.",
-        "incorrect": "Adresa 0x000050 je platná adresa v uvedeném příkladu adresního prostoru.",
-        "sectionNumber": "1.1.2",
-        "sectionTitle": "Adresní prostor"
-      },
-      {
-        "uuid": "a6ac0fed-cbe3-4d7b-a86e-e8d0985a120c",
-        "correct": "Čtyřbajtové slovo lze uložit na adresu 0x010030 v uvedeném adresním prostoru.",
-        "incorrect": "Čtyřbajtové slovo nelze uložit na adresu 0x01fffd v uvedeném adresním prostoru.",
-        "sectionNumber": "1.1.2",
-        "sectionTitle": "Adresní prostor"
-      },
-      {
         "uuid": "20aeff10-b2a4-4814-af7f-f25d2e3b712b",
         "correct": "Adresní prostor programu obvykle zahrnuje sekce pro kód, data a zásobník.",
         "incorrect": "Adresní prostor programu obvykle zahrnuje pouze sekce pro kód a dočasná data.",
@@ -505,8 +491,8 @@ export const creditData: CreditData = [
       },
       {
         "uuid": "f527fbaf-81b6-4603-b88e-0017de944e30",
-        "correct": "Adresa 0x0100 ve dvou různých virtuálních prostorech jsou považovány za různé virtuální adresy.",
-        "incorrect": "Adresa 0x0100 ve dvou různých virtuálních prostorech jsou považovány za stejné virtuální adresy.",
+        "correct": "Stejná adresa ve dvou různých virtuálních prostorech je považována za různé virtuální adresy.",
+        "incorrect": "Stejná adresa ve dvou různých virtuálních prostorech ja považována za stejné virtuální adresy.",
         "sectionNumber": "1.2.2",
         "sectionTitle": "Virtuální a fyzické adresy"
       },
@@ -4928,13 +4914,6 @@ export const creditData: CreditData = [
         "sectionTitle": "DMA"
       },
       {
-        "uuid": "a5feb468-80a8-488a-8122-183308241e1a",
-        "correct": "Síťová rozhraní Intel E1000 podporují příjmové fronty s maximální délkou 256 rámců.",
-        "incorrect": "Síťová rozhraní Intel E1000 podporují příjmové fronty s maximální délkou 512 rámců.",
-        "sectionNumber": "8.3.2",
-        "sectionTitle": "DMA"
-      },
-      {
         "uuid": "90cf6795-02e1-4945-9802-afb6d6552a39",
         "correct": "Při 1Gb/s a 1kHz přerušení DMA je nutné zpracovat přibližně 1Mb dat na každé přerušení.",
         "incorrect": "Při 1Gb/s a 1kHz přerušení DMA je nutné zpracovat přibližně 1Kb dat na každé přerušení.",
@@ -5089,44 +5068,9 @@ export const creditData: CreditData = [
         "sectionTitle": "Examples & History"
       },
       {
-        "uuid": "f28e3a1e-5e8f-4afd-b4a5-0f314cba7d18",
-        "correct": "IBM provedla první pokusy s provozováním více OS na stejném hardwaru v 60. letech.",
-        "incorrect": "Microsoft provedla první pokusy s provozováním více OS na stejném hardwaru v 60. letech.",
-        "sectionNumber": "9.3.5",
-        "sectionTitle": "Examples & History"
-      },
-      {
-        "uuid": "afac5d09-a74d-47f8-8690-9c4e12994c9a",
-        "correct": "CP/CMS z roku 1968 a VM/370 z roku 1972 jsou rané systémy pro virtualizaci od IBM.",
-        "incorrect": "CP/CMS z roku 2000 a VM/370 z roku 1972 jsou rané systémy pro virtualizaci od IBM.",
-        "sectionNumber": "9.3.5",
-        "sectionTitle": "Examples & History"
-      },
-      {
         "uuid": "50947234-b11e-4536-bba4-19deb08263a5",
         "correct": "Architektura x86 postrádá režim virtuálního supervizora.",
         "incorrect": "Architektura x86 disponuje režimem virtuálního supervizora.",
-        "sectionNumber": "9.3.6",
-        "sectionTitle": "Desktop Virtualisation"
-      },
-      {
-        "uuid": "c65b1ca0-d291-49ae-9f63-d2eefa94d94a",
-        "correct": "Softwarová virtualizace se stala proveditelnou řešením koncem 90. let.",
-        "incorrect": "Softwarová virtualizace byla proveditelná řešením již v raných 90. letech.",
-        "sectionNumber": "9.3.6",
-        "sectionTitle": "Desktop Virtualisation"
-      },
-      {
-        "uuid": "ab7560f7-fbe0-4375-bfce-487bdf532677",
-        "correct": "Výkon procesorů PC se stal dostatečným pro emulaci PC-na-PC v polovině 90. let.",
-        "incorrect": "Výkon procesorů PC se stal dostatečným pro emulaci PC-na-PC až na začátku 21. století.",
-        "sectionNumber": "9.3.6",
-        "sectionTitle": "Desktop Virtualisation"
-      },
-      {
-        "uuid": "3c29d622-1197-460b-87b8-99e570660cc6",
-        "correct": "Bochs byl uveden v roce 1994, VMWare v roce 1999 a QEMU v roce 2003.",
-        "incorrect": "Bochs byl uveden v roce 1999, VMWare v roce 1994 a QEMU v roce 2003.",
         "sectionNumber": "9.3.6",
         "sectionTitle": "Desktop Virtualisation"
       },
@@ -6130,13 +6074,6 @@ export const creditData: CreditData = [
         "incorrect": "Číslování vrstev, na které se odkazuje text, odpovídá číslování TCP/IP modelu.",
         "sectionNumber": "11.1.4",
         "sectionTitle": "Networking Layers"
-      },
-      {
-        "uuid": "efbbb8fc-9af0-4086-9528-883129b59670",
-        "correct": "Síťové služby jsou standardní součástí operačních systémů posledních dvacet let.",
-        "incorrect": "Síťové služby se staly standardní součástí operačních systémů teprve nedávno.",
-        "sectionNumber": "11.1.5",
-        "sectionTitle": "Networking and Operating Systems"
       },
       {
         "uuid": "1081ae19-701e-46bf-a49f-5604cd70a6ec",
